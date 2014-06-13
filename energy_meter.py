@@ -36,13 +36,19 @@ line = ser.readline()
 line = ser.readline()
 print("*F01=|"+line+"|")
 
+ser.write("*NAM");
+line = ser.readline()
+print("*NAM=|"+line+"|")
+device_head=line
+
 #plot data
 data=numpy.empty(32)
 data.fill(numpy.NAN)
 i=data.size
+##setup GUI window
 pl.ion()
 fig = pl.gcf()
-fig.canvas.set_window_title('Power meter ('+'Gentec-Plink'+')')
+fig.canvas.set_window_title('Power meter ('+'Gentec-Plink='+device_head+')')
 
 #data recording
 print '#date (date time),\tpower (W)'
