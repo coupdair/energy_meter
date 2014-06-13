@@ -39,7 +39,7 @@ print("*F01=|"+line+"|")
 #plot data
 data=numpy.empty(345)
 data.fill(numpy.NAN)
-i=0
+i=data.size
 pl.ion()
 
 #data recording
@@ -66,11 +66,16 @@ while(True):
   f.write(strData);f.write("\n")
   f.close()
   #plot data
+  if(i<0):
+    i=data.size
+  i-=1
   data[i]=val
+  ##layout
   pl.clf()
+  pl.xlim([0,data.size])
+  ##plot
   pl.plot(data)
   pl.draw()
-  i+=1
   #wait a while
   time.sleep(0.1)
 
