@@ -37,7 +37,7 @@ line = ser.readline()
 print("*F01=|"+line+"|")
 
 #plot data
-data=numpy.empty(345)
+data=numpy.empty(32)
 data.fill(numpy.NAN)
 i=data.size
 pl.ion()
@@ -67,10 +67,10 @@ while(True):
   f.close()
   #plot data
   if(i<0):
-    i=data.size
+    i=1
   i-=1
   for j in range(i+1,data.size-1):
-    print(j+1)
+#    print(j+1)
     data[j]=data[j+1]
   data[data.size-1]=val
   ##layout
