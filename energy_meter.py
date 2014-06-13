@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+#v0.0.2
+
 #serial
 import serial
 #log
