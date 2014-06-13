@@ -35,14 +35,18 @@ ser.write("*F01");
 line = ser.readline()
 line = ser.readline()
 print("*F01=|"+line+"|")
+device_info=line.split("\t")
+
+for i in range(0,len(device_info)-1,2):
+  print('device_info['+str(i)+']('+device_info[i]+')='+device_info[i+1])+' ['+str(i+1)+']'
+
+#print('dev.'+device_info[4]+'='+device_info[5])
+device_wavelength=device_info[4]+'='+device_info[5]+" nm"
 
 ser.write("*NAM");
 line = ser.readline()
 print("*NAM=|"+line+"|")
 device_head=line
-
-device_wavelength="1064 nm"
-
 
 #plot data
 data=numpy.empty(32)
@@ -89,10 +93,10 @@ while(True):
   data[data.size-1]=val
   ##layout
   pl.clf()
-  pl.title(device_wavelength)
+  pl.title(device_wavelength+', current value='+str(round(val,4))+' W')
+  pl.ylabel('\npower (W)')
   pl.xlim([0,data.size])
   pl.xlabel('time (s)')
-  pl.ylabel('power (W)')
   ##plot
   pl.plot(data)
   pl.draw()
