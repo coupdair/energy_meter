@@ -24,20 +24,13 @@ print '\nshow serial information:\n'
 ser.write("*VER");
 line = ser.readline()
 print("*VER=|"+line+"|")
-ser.write("*KPA")
-line = ser.readline()
-print("*KPA=|"+line+"|")
-line = ser.readline()
 #many information
 ser.write("*F01");
 line = ser.readline()
 line = ser.readline()
 print("*F01=|"+line+"|")
-line=''
-line = ser.readline()
-time.sleep(1) #wait a while
 
-#jump a few init messages
+print '#date (date time),\tpower (W)'
 #for i in range(0,3):
 while(True):
   #ask and get data
@@ -60,6 +53,6 @@ while(True):
   f.write(strData);f.write("\n")
   f.close()
   #wait a while
-  time.sleep(2)
+  time.sleep(1)
 
 
