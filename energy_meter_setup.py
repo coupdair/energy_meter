@@ -4,12 +4,19 @@ from Tkinter import *
 
 root = Tk()
 
-def callback(event):
-    print "clicked at", event.x, event.y
+def callback():
+    print "called the callback!"
 
-frame = Frame(root, width=100, height=100)
-frame.bind("<Button-1>", callback)
-frame.pack()
+# create a toolbar
+toolbar = Frame(root)
+
+b = Button(toolbar, text="new", width=6, command=callback)
+b.pack(side=LEFT, padx=2, pady=2)
+
+b = Button(toolbar, text="open", width=6, command=callback)
+b.pack(side=LEFT, padx=2, pady=2)
+
+toolbar.pack(side=TOP, fill=X)
 
 root.mainloop()
 
