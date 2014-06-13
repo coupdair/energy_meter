@@ -37,7 +37,8 @@ line = ser.readline()
 print("*F01=|"+line+"|")
 
 #plot data
-data=numpy.zeros(1000)
+data=numpy.empty(345)
+data.fill(numpy.NAN)
 i=0
 pl.ion()
 
@@ -71,6 +72,6 @@ while(True):
   pl.draw()
   i+=1
   #wait a while
-  time.sleep(0.5)
+  time.sleep(0.1)
 
 
