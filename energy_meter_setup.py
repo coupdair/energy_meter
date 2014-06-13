@@ -92,15 +92,14 @@ b.pack(side=LEFT, padx=2, pady=2)
 b = Button(toolbar, text="266 nm", width=6, command=callback266)
 b.pack(side=LEFT, padx=2, pady=2)
 
-b = Button(toolbar, text="ON",  width=6, command=callbackAnticipationON)
+b = Button(toolbar, text="ON",  width=6, command=callbackAnticipationON, relief=SUNKEN)
 b.pack(side=LEFT, padx=2, pady=2)
 
-b = Button(toolbar, text="OFF", width=6, command=callbackAnticipationOFF)
+b = Button(toolbar, text="OFF", width=6, command=callbackAnticipationOFF, relief=RAISED)
 b.pack(side=LEFT, padx=2, pady=2)
 
 toolbar.pack(side=TOP, fill=X)
 
 root.mainloop()
 
-#Example : *PWC01064 selects the wavelength 1064 nm
 
