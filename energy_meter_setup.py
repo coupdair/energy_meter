@@ -21,11 +21,11 @@ line = ser.readline()
 print("*VER=|"+line+"|")
 
 def set_wavelength(value):
-    print "set "+str(value)+" nm."
-#    ser.write("*PWC01064");
-    ser.write("*PWC00532");
+    strValue='{:05d}'.format(value)
+    print "set "+strValue+" nm."
+    ser.write("*PWC"+strValue);
     line = ser.readline()
-    print("*PWC01064=|"+line+"|")
+    print("*PWC"+line+"=|"+strValue+"|")
     if(line!="ACK\n"):
         print("Warning: no acknowledgement received (e.g. ACK).")
 
