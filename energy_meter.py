@@ -69,7 +69,10 @@ while(True):
   if(i<0):
     i=data.size
   i-=1
-  data[i]=val
+  for j in range(i,data.size-2):
+    print(j+2)
+    data[j+1]=data[j+2]
+  data[data.size-1]=val
   ##layout
   pl.clf()
   pl.xlim([0,data.size])
