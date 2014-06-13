@@ -75,10 +75,14 @@ def callback266():
 def callbackAnticipationON():
     print "anticipation ON ..."
     set_device("*ANT")
+    bAntON["relief"]=SUNKEN;
+    bAntOFF["relief"]=RAISED;
 
 def callbackAnticipationOFF():
     print "anticipation OFF ..."
     set_device("*ANF")
+    bAntOFF["relief"]=SUNKEN;
+    bAntON["relief"]=RAISED;
 
 # create a toolbar
 toolbar = Frame(root)
@@ -92,11 +96,11 @@ b.pack(side=LEFT, padx=2, pady=2)
 b = Button(toolbar, text="266 nm", width=6, command=callback266)
 b.pack(side=LEFT, padx=2, pady=2)
 
-b = Button(toolbar, text="ON",  width=6, command=callbackAnticipationON, relief=SUNKEN)
-b.pack(side=LEFT, padx=2, pady=2)
+bAntON=Button(toolbar, text="ON",  width=6, command=callbackAnticipationON)
+bAntON.pack(side=LEFT, padx=2, pady=2)
 
-b = Button(toolbar, text="OFF", width=6, command=callbackAnticipationOFF, relief=RAISED)
-b.pack(side=LEFT, padx=2, pady=2)
+bAntOFF=Button(toolbar, text="OFF", width=6, command=callbackAnticipationOFF)
+bAntOFF.pack(side=LEFT, padx=2, pady=2)
 
 toolbar.pack(side=TOP, fill=X)
 
