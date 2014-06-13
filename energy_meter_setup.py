@@ -22,6 +22,12 @@ print("*VER=|"+line+"|")
 
 def set_wavelength(value):
     print "set "+str(value)+" nm."
+#    ser.write("*PWC01064");
+    ser.write("*PWC00532");
+    line = ser.readline()
+    print("*PWC01064=|"+line+"|")
+    if(line!="ACK\n"):
+        print("Warning: no acknowledgement received (e.g. ACK).")
 
 def get_wavelength():
     #many information
