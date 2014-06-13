@@ -41,6 +41,8 @@ data=numpy.empty(32)
 data.fill(numpy.NAN)
 i=data.size
 pl.ion()
+fig = pl.gcf()
+fig.canvas.set_window_title('Power meter ('+'Gentec-Plink'+')')
 
 #data recording
 print '#date (date time),\tpower (W)'
@@ -79,6 +81,8 @@ while(True):
   ##layout
   pl.clf()
   pl.xlim([0,data.size])
+  pl.xlabel('time (s)')
+  pl.ylabel('power (W)')
   ##plot
   pl.plot(data)
   pl.draw()
