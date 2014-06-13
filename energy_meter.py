@@ -40,8 +40,17 @@ device_info=line.split("\t")
 for i in range(0,len(device_info)-1,2):
   print('device_info['+str(i)+']('+device_info[i]+')='+device_info[i+1])+' ['+str(i+1)+']'
 
-#print('dev.'+device_info[4]+'='+device_info[5])
-device_wavelength=device_info[4]+'='+device_info[5]+" nm"
+def get_wavelength_str():
+    #many information
+    ser.write("*F01");
+    line = ser.readline()
+    line = ser.readline()
+    device_info=line.split("\t")
+    #single one
+    device_wavelength=device_info[4]+'='+device_info[5]+" nm"
+    return device_wavelength;
+
+device_wavelength=get_wavelength_str()
 
 ser.write("*NAM");
 line = ser.readline()
@@ -101,6 +110,8 @@ while(True):
   ##plot
   pl.plot(data)
   pl.draw()
+  ##get wavelength in case of setup change
+  device_wavelength=get_wavelength_str()
   #wait a while
   time.sleep(0.2)
 
