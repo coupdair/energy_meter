@@ -1,8 +1,13 @@
 #!/usr/bin/python
 
+#serial
 import serial
+#log
 import string
 import time
+#graph
+import numpy
+import pylab as pl
 
 serialDev='/dev/ttyUSB0'
 
@@ -24,12 +29,18 @@ print '\nshow serial information:\n'
 ser.write("*VER");
 line = ser.readline()
 print("*VER=|"+line+"|")
+
 #many information
 ser.write("*F01");
 line = ser.readline()
 line = ser.readline()
 print("*F01=|"+line+"|")
 
+#plot data
+data=numpy.zeros(1000)
+i=0
+
+#data recording
 print '#date (date time),\tpower (W)'
 #for i in range(0,3):
 while(True):
@@ -41,7 +52,7 @@ while(True):
 ###  print("*CVU=|"+line+"|\n")
   #get time
   current_time = time.localtime()
-  #convert to integer
+  #convert to float
   val=float(line)
   #convert to string, i.e. line
   strTime=time.strftime('%d/%m/%Y %H:%M:%S', current_time)
@@ -52,7 +63,12 @@ while(True):
   f = open("log_GentecPlink.txt","a")
   f.write(strData);f.write("\n")
   f.close()
+  #plot data
+  data[i]=val
+  pl.plot(data)
+  pl.show()
+  i+=1
   #wait a while
-  time.sleep(1)
+  time.sleep(0.5)
 
 
