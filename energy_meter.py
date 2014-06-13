@@ -69,9 +69,9 @@ while(True):
   if(i<0):
     i=data.size
   i-=1
-  for j in range(i,data.size-2):
-    print(j+2)
-    data[j+1]=data[j+2]
+  for j in range(i+1,data.size-1):
+    print(j+1)
+    data[j]=data[j+1]
   data[data.size-1]=val
   ##layout
   pl.clf()
