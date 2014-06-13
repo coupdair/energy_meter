@@ -10,7 +10,7 @@ ser = serial.Serial(serialDev, 57600, timeout=1)
 #ser = serial.Serial('/dev/ttyACM0', 9600, timeout=2)
 
 print 'record 1 value from ', serialDev
-print 'format: date\tpart'
+print 'format: date\tpower'
 print 'example:'
 line = "123.456"
 val=float(line)
@@ -24,8 +24,10 @@ print '\nshow serial information:\n'
 ser.write("*VER");
 line = ser.readline()
 print("*VER=|"+line+"|")
-#ser.write("*KPA")
-#line = ser.readline()
+ser.write("*KPA")
+line = ser.readline()
+print("*KPA=|"+line+"|")
+line = ser.readline()
 #many information
 ser.write("*F01");
 line = ser.readline()
@@ -43,7 +45,7 @@ while(True):
   ##line = "123.456"
   line = ser.readline()
   line = ser.readline()
-  print("*CVU=|"+line+"|\n")
+###  print("*CVU=|"+line+"|\n")
   #get time
   current_time = time.localtime()
   #convert to integer
