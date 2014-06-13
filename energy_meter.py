@@ -41,6 +41,9 @@ line = ser.readline()
 print("*NAM=|"+line+"|")
 device_head=line
 
+device_wavelength="1064 nm"
+
+
 #plot data
 data=numpy.empty(32)
 data.fill(numpy.NAN)
@@ -86,6 +89,7 @@ while(True):
   data[data.size-1]=val
   ##layout
   pl.clf()
+  pl.title(device_wavelength)
   pl.xlim([0,data.size])
   pl.xlabel('time (s)')
   pl.ylabel('power (W)')
