@@ -70,6 +70,8 @@ fig.canvas.set_window_title('Power meter ('+'Gentec-Plink='+device_head+')')
 
 #data recording
 print '#date (date time),\tpower (W)'
+checkWL=0
+checkWL_size=5
 #for i in range(0,3):
 while(True):
   #ask and get data
@@ -113,7 +115,11 @@ while(True):
   pl.plot(data)
   pl.draw()
   ##get wavelength in case of setup change
-  device_wavelength=get_wavelength_str()
+  if(checkWL>checkWL_size):
+    device_wavelength=get_wavelength_str()
+    checkWL=0
+  else:
+    checkWL+=1
   #wait a while
   time.sleep(0.2)
 
