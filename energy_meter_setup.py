@@ -11,7 +11,7 @@ ser = serial.Serial(serialDev, 57600, timeout=1)
 
 #GUI
 root = Tk()
-root.title("setup wavelength")
+root.title("setup wavelength and anticipation")
 
 #device
 print '\nshow serial information:\n'
@@ -45,7 +45,13 @@ def get_wavelength():
 #    print "get "+str(device_wavelength)+" nm."
     return device_wavelength;
 
+def set_device(key):
+    ser.write(key);
+    line = ser.readline()
+    print(key+"=|"+line+"|")
+
 #GUI
+##WaveLength
 def callback(value):
     print "setting "+str(value)+" nm ..."
     set_wavelength(value)
@@ -63,6 +69,15 @@ def callback532():
 def callback266():
     callback(266)
 
+##Anticipation ON/OFF
+def callbackAnticipationON():
+    print "anticipation ON ..."
+    set_device("*ANT")
+
+def callbackAnticipationOFF():
+    print "anticipation OFF ..."
+    set_device("*ANF")
+
 # create a toolbar
 toolbar = Frame(root)
 
@@ -73,6 +88,12 @@ b = Button(toolbar, text="532 nm", width=6, command=callback532)
 b.pack(side=LEFT, padx=2, pady=2)
 
 b = Button(toolbar, text="266 nm", width=6, command=callback266)
+b.pack(side=LEFT, padx=2, pady=2)
+
+b = Button(toolbar, text="ON",  width=6, command=callbackAnticipationON)
+b.pack(side=LEFT, padx=2, pady=2)
+
+b = Button(toolbar, text="OFF", width=6, command=callbackAnticipationOFF)
 b.pack(side=LEFT, padx=2, pady=2)
 
 toolbar.pack(side=TOP, fill=X)

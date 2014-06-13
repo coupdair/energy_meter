@@ -31,10 +31,10 @@ line = ser.readline()
 print("*VER=|"+line+"|")
 
 #many information
-ser.write("*F01");
+ser.write("*F02");
 line = ser.readline()
 line = ser.readline()
-print("*F01=|"+line+"|")
+print("*F02=|"+line+"|")
 device_info=line.split("\t")
 
 for i in range(0,len(device_info)-1,2):
