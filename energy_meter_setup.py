@@ -25,7 +25,7 @@ def set_wavelength(value):
     print "set "+strValue+" nm."
     ser.write("*PWC"+strValue);
     line = ser.readline()
-    print("*PWC"+line+"=|"+strValue+"|")
+    print("*PWC"+strValue+"=|"+line+"|")
     if(line!="ACK\n"):
         print("Warning: no acknowledgement received (e.g. ACK).")
 
@@ -47,13 +47,18 @@ def get_wavelength():
 
 #GUI
 def callback1064():
-    print "called the callback 1064"
+    print "setting 1064 nm"
     set_wavelength(1064)
     print 'current='+str(get_wavelength())+" nm."
 
 def callback532():
-    print "called the callback 532"
+    print "setting 532 nm"
     set_wavelength(532)
+    print 'current='+str(get_wavelength())+" nm."
+
+def callback266():
+    print "setting 266 nm"
+    set_wavelength(266)
     print 'current='+str(get_wavelength())+" nm."
 
 # create a toolbar
@@ -63,6 +68,9 @@ b = Button(toolbar, text="1064 nm", width=6, command=callback1064)
 b.pack(side=LEFT, padx=2, pady=2)
 
 b = Button(toolbar, text="532 nm", width=6, command=callback532)
+b.pack(side=LEFT, padx=2, pady=2)
+
+b = Button(toolbar, text="266 nm", width=6, command=callback266)
 b.pack(side=LEFT, padx=2, pady=2)
 
 toolbar.pack(side=TOP, fill=X)
