@@ -52,6 +52,21 @@ def set_device(key):
     line = ser.readline()
     print(key+"=|"+line+"|")
 
+def get_anticipation():
+    #many information
+    ser.write("*F02");
+    line = ser.readline()
+    line = ser.readline()
+    device_info=line.split("\t")
+    
+    for i in range(0,len(device_info)-1,2):
+      print('device_info['+str(i)+']('+device_info[i]+')='+device_info[i+1])+' ['+str(i+1)+']'
+    
+#    print('dev.'+device_info[24]+'='+device_info[25])
+    device_anticipation=int(device_info[25]
+#    print "get "+str(device_anticipation)+" (ON=1, OFF=0)."
+    return device_anticipation;
+
 #GUI
 ##WaveLength
 def callback(value):
@@ -75,14 +90,16 @@ def callback266():
 def callbackAnticipationON():
     print "anticipation ON ..."
     set_device("*ANT")
-    bAntON["relief"]=SUNKEN;
-    bAntOFF["relief"]=RAISED;
+    if(get_anticipation()==1):
+      bAntON["relief"]=SUNKEN;
+      bAntOFF["relief"]=RAISED;
 
 def callbackAnticipationOFF():
     print "anticipation OFF ..."
     set_device("*ANF")
-    bAntOFF["relief"]=SUNKEN;
-    bAntON["relief"]=RAISED;
+    if(get_anticipation()==0):
+      bAntOFF["relief"]=SUNKEN;
+      bAntON["relief"]=RAISED;
 
 # create a toolbar
 toolbar = Frame(root)
