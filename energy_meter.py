@@ -93,14 +93,15 @@ while(True):
   data[data.size-1]=val
   ##layout
   pl.clf()
-  pl.title(device_wavelength+', current value='+str(round(val,4))+' W')
+  pl.title(time.strftime('%Hh%Mmin%Ss', current_time)+'\n'+device_wavelength+', current value='+str(round(val,4))+' W')
   pl.ylabel('\npower (W)')
   pl.xlim([0,data.size])
-  pl.xlabel('time (s)')
+  pl.xlabel('elapsed time (s)')
+  pl.xticks([1,11,21,26,30,31], [30,20,10,5,1,0])
   ##plot
   pl.plot(data)
   pl.draw()
   #wait a while
-  time.sleep(0.1)
+  time.sleep(0.2)
 
 
