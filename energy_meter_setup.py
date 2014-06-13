@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-#v0.0.2
+#v0.0.3
 
 #serial
 import serial
@@ -43,7 +43,7 @@ def get_wavelength():
 #      print('device_info['+str(i)+']('+device_info[i]+')='+device_info[i+1])+' ['+str(i+1)+']'
     
 #    print('dev.'+device_info[4]+'='+device_info[5])
-    device_wavelength=device_info[5]
+    device_wavelength=int(device_info[5])
 #    print "get "+str(device_wavelength)+" nm."
     return device_wavelength;
 
@@ -71,22 +71,26 @@ def get_anticipation_GUI():
 
 #GUI
 ##WaveLength
-def callback(value):
+def callback(value, index):
     print "setting "+str(value)+" nm ..."
     set_wavelength(value)
     check=get_wavelength()
     print 'current='+str(check)+" nm."
     if(check!=value):
         print("Warning: "+str(value)+" nm not set ! (presently "+str(check)+"!="+str(value)+").?")
+    #update GUI
+    for i in range(0,len(bWL)):
+      bWL[i]["relief"]=RAISED
+    bWL[index]["relief"]=SUNKEN
 
 def callback1064():
-    callback(1064)
+    callback(1064,0)
 
 def callback532():
-    callback(532)
+    callback(532,1)
 
 def callback266():
-    callback(266)
+    callback(266,2)
 
 ##Anticipation ON/OFF
 def callbackAnticipationON():
@@ -102,14 +106,15 @@ def callbackAnticipationOFF():
 # create a toolbar
 toolbar = Frame(root)
 
-b = Button(toolbar, text="1064 nm",width=6, command=callback1064)
-b.pack(side=LEFT, padx=2, pady=2)
+bWL=[]
+bWL.append(Button(toolbar, text="1064 nm",width=6, command=callback1064))
+bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
 
-b = Button(toolbar, text="532 nm", width=6, command=callback532)
-b.pack(side=LEFT, padx=2, pady=2)
+bWL.append(Button(toolbar, text="532 nm", width=6, command=callback532))
+bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
 
-b = Button(toolbar, text="266 nm", width=6, command=callback266)
-b.pack(side=LEFT, padx=2, pady=2)
+bWL.append(Button(toolbar, text="266 nm", width=6, command=callback266))
+bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
 
 bAntON=Button(toolbar, text="ON",  width=6, command=callbackAnticipationON)
 bAntON.pack(side=LEFT, padx=2, pady=2)
