@@ -39,6 +39,7 @@ print("*F01=|"+line+"|")
 #plot data
 data=numpy.zeros(1000)
 i=0
+pl.ion()
 
 #data recording
 print '#date (date time),\tpower (W)'
@@ -65,8 +66,9 @@ while(True):
   f.close()
   #plot data
   data[i]=val
+  pl.clf()
   pl.plot(data)
-  pl.show()
+  pl.draw()
   i+=1
   #wait a while
   time.sleep(0.5)
