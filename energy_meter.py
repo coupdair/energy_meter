@@ -66,12 +66,15 @@ while(True):
   f.write(strData);f.write("\n")
   f.close()
   #plot data
+  ##check boundary
   if(i<0):
     i=1
   i-=1
+  ##shift previous values
   for j in range(i+1,data.size-1):
 #    print(j+1)
     data[j]=data[j+1]
+  ##set current value
   data[data.size-1]=val
   ##layout
   pl.clf()
