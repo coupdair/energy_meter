@@ -58,14 +58,16 @@ def get_anticipation():
     line = ser.readline()
     line = ser.readline()
     device_info=line.split("\t")
-    
-    for i in range(0,len(device_info)-1,2):
-      print('device_info['+str(i)+']('+device_info[i]+')='+device_info[i+1])+' ['+str(i+1)+']'
-    
-#    print('dev.'+device_info[24]+'='+device_info[25])
-    device_anticipation=int(device_info[25]
-#    print "get "+str(device_anticipation)+" (ON=1, OFF=0)."
+    device_anticipation=int(device_info[25])
     return device_anticipation;
+
+def get_anticipation_GUI():
+    if(get_anticipation()==1):
+      bAntON["relief"]=SUNKEN;
+      bAntOFF["relief"]=RAISED;
+    else:
+      bAntOFF["relief"]=SUNKEN;
+      bAntON["relief"]=RAISED;
 
 #GUI
 ##WaveLength
@@ -90,16 +92,12 @@ def callback266():
 def callbackAnticipationON():
     print "anticipation ON ..."
     set_device("*ANT")
-    if(get_anticipation()==1):
-      bAntON["relief"]=SUNKEN;
-      bAntOFF["relief"]=RAISED;
+    get_anticipation_GUI()
 
 def callbackAnticipationOFF():
     print "anticipation OFF ..."
     set_device("*ANF")
-    if(get_anticipation()==0):
-      bAntOFF["relief"]=SUNKEN;
-      bAntON["relief"]=RAISED;
+    get_anticipation_GUI()
 
 # create a toolbar
 toolbar = Frame(root)
@@ -115,9 +113,9 @@ b.pack(side=LEFT, padx=2, pady=2)
 
 bAntON=Button(toolbar, text="ON",  width=6, command=callbackAnticipationON)
 bAntON.pack(side=LEFT, padx=2, pady=2)
-
 bAntOFF=Button(toolbar, text="OFF", width=6, command=callbackAnticipationOFF)
 bAntOFF.pack(side=LEFT, padx=2, pady=2)
+get_anticipation_GUI()
 
 toolbar.pack(side=TOP, fill=X)
 
