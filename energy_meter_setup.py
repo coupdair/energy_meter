@@ -103,9 +103,9 @@ def callbackAnticipationOFF():
     set_device("*ANF")
     get_anticipation_GUI()
 
-# create a toolbar
+#create a toolbar
 toolbar = Frame(root)
-
+##WaveLength
 bWL=[]
 bWL.append(Button(toolbar, text="1064 nm",width=6, command=callback1064))
 bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
@@ -115,7 +115,7 @@ bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
 
 bWL.append(Button(toolbar, text="266 nm", width=6, command=callback266))
 bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
-
+##Anticipation ON/OFF
 bAntON=Button(toolbar, text="ON",  width=6, command=callbackAnticipationON)
 bAntON.pack(side=LEFT, padx=2, pady=2)
 bAntOFF=Button(toolbar, text="OFF", width=6, command=callbackAnticipationOFF)
