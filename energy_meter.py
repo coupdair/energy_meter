@@ -69,7 +69,7 @@ fig = pl.gcf()
 fig.canvas.set_window_title('Power meter ('+'Gentec-Plink='+device_head+')')
 
 #data recording
-print '#date (date time),\tpower (W)'
+print '#date (date time),\tpower (mJ)'
 checkWL=0
 checkWL_size=5
 #for i in range(0,3):
@@ -83,7 +83,7 @@ while(True):
   #get time
   current_time = time.localtime()
   #convert to float
-  val=float(line)
+  val=float(line)/10*1000
   #convert to string, i.e. line
   strTime=time.strftime('%d/%m/%Y %H:%M:%S', current_time)
   strData=strTime+",\t" +str(val)
@@ -106,8 +106,8 @@ while(True):
   data[data.size-1]=val
   ##layout
   pl.clf()
-  pl.title(time.strftime('%Hh%Mmin%Ss', current_time)+'\n'+device_wavelength+', current value='+str(round(val,4))+' W')
-  pl.ylabel('\npower (W)')
+  pl.title(time.strftime('%Hh%Mmin%Ss', current_time)+'\n'+device_wavelength+', current value='+str(round(val,4))+' mJ')
+  pl.ylabel('\npower (mJ)')
   pl.xlim([0,data.size])
   pl.xlabel('elapsed time (s)')
   pl.xticks([1,11,21,26,30,31], [30,20,10,5,1,0])

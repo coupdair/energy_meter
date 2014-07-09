@@ -13,3 +13,5 @@ gedit ./energy_meter.py ./energy_meter_setup.py &
 
 #UP19K-15S-VR
 *F02=|Version   3       Name    UP19K-15S-VR    Wavelength      1064    Trig Level      2.500000e-01    Max Analog Output   2.047500e+00    Mode    0       Offset  0       MUL     1.000000e+00    OFF     0.000000e+00PWCStatus       524280  MinScale        22      LinearCorr      1       Anticipation    1       Attenuator 0|
+
+
