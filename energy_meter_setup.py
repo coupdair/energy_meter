@@ -3,8 +3,21 @@
 version='v0.0.3d'
 
 #TODO:
-## - reset ZERO
 ## - other wavelength correction (table)
+## - add log for setup: date set*
+
+#log
+import string
+import time
+
+def log(set):
+  current_time = time.localtime()
+  strTime=time.strftime('%d/%m/%Y %H:%M:%S', current_time)
+  strData=strTime+",\t" +set
+  #write to file
+  f = open("setup_GentecPlink.txt","a")
+  f.write(strData);f.write("\n")
+  f.close()
 
 #serial
 import serial
@@ -25,6 +38,10 @@ print '\nshow serial information:\n'
 ser.write("*VER");
 line = ser.readline()
 print("*VER=|"+line+"|")
+log('open USB-Plink '+line)
+
+#TODO: log head type
+#log('with head '+line)
 
 def set_zero():
     ser.write("*SOU");
