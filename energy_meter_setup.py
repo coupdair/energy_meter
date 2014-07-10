@@ -4,19 +4,19 @@ version='v0.0.3d'
 
 #TODO:
 ## - other wavelength correction (table)
-## - add log for setup: date set*
 
 #log
 import string
 import time
 
+#log setup parameter in a file
 def log(set):
   current_time = time.localtime()
   strTime=time.strftime('%d/%m/%Y %H:%M:%S', current_time)
   strData=strTime+",\t" +set
   #write to file
   f = open("setup_GentecPlink.txt","a")
-  f.write(strData);f.write("\n")
+  f.write(strData);#f.write("\n")
   f.close()
 
 #serial
@@ -30,18 +30,21 @@ ser = serial.Serial(serialDev, 57600, timeout=1)
 
 #GUI
 root = Tk()
-root.title("setup wavelength and anticipation")
+root.title("setup wavelength, anticipation and zero offset")
 
 #device
 print '\nshow serial information:\n'
-#Plink version
+##Plink version
 ser.write("*VER");
 line = ser.readline()
 print("*VER=|"+line+"|")
 log('open USB-Plink '+line)
-
-#TODO: log head type
-#log('with head '+line)
+##power head name
+ser.write("*NAM");
+line = ser.readline()
+print("*NAM=|"+line+"|")
+device_head=line
+log('with head '+device_head)
 
 def set_zero():
     ser.write("*SOU");
@@ -102,6 +105,8 @@ def callback(value, index):
     print 'current='+str(check)+" nm."
     if(check!=value):
         print("Warning: "+str(value)+" nm not set ! (presently "+str(check)+"!="+str(value)+").?")
+    #log setup change
+    log("set wavelength correction to "+str(check)+" nm.\n")
     #update GUI
     for i in range(0,len(bWL)):
       bWL[i]["relief"]=RAISED
@@ -124,16 +129,22 @@ def callbackAnticipationON():
     print "anticipation ON ..."
     set_device("*ANT")
     get_anticipation_GUI()
+    #log setup change
+    log("set anticipation.\n")
 
 def callbackAnticipationOFF():
     print "anticipation OFF ..."
     set_device("*ANF")
     get_anticipation_GUI()
+    #log setup change
+    log("set no anticipation.\n")
 
 ##set zero offset
 def callbackZero():
     print "set zero offset."
     set_zero()
+    #log setup change
+    log("set zero offset.\n")
 
 #create a toolbar
 toolbar = Frame(root)
