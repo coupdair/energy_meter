@@ -96,8 +96,11 @@ def callback1064():
 def callback532():
     callback(532,1)
 
+def callback308():
+    callback(308,2)
+
 def callback266():
-    callback(266,2)
+    callback(266,3)
 
 ##Anticipation ON/OFF
 def callbackAnticipationON():
@@ -123,6 +126,9 @@ bWL.append(Button(toolbar, text="1064 nm",width=6, command=callback1064))
 bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
 
 bWL.append(Button(toolbar, text="532 nm", width=6, command=callback532))
+bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
+
+bWL.append(Button(toolbar, text="308 nm", width=6, command=callback308))
 bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
 
 bWL.append(Button(toolbar, text="266 nm", width=6, command=callback266))
