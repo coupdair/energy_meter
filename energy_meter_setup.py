@@ -1,6 +1,10 @@
 #!/usr/bin/python
 
-#v0.0.3
+version='v0.0.3d'
+
+#TODO:
+## - reset ZERO
+## - other wavelength correction (table)
 
 #serial
 import serial
@@ -21,6 +25,9 @@ print '\nshow serial information:\n'
 ser.write("*VER");
 line = ser.readline()
 print("*VER=|"+line+"|")
+
+def set_zero():
+    ser.write("*SOU");
 
 def set_wavelength(value):
     strValue='{:05d}'.format(value)
@@ -103,6 +110,11 @@ def callbackAnticipationOFF():
     set_device("*ANF")
     get_anticipation_GUI()
 
+##set zero offset
+def callbackZero():
+    print "set zero offset."
+    set_zero()
+
 #create a toolbar
 toolbar = Frame(root)
 ##WaveLength
@@ -120,9 +132,14 @@ bAntON=Button(toolbar, text="ON",  width=6, command=callbackAnticipationON)
 bAntON.pack(side=LEFT, padx=2, pady=2)
 bAntOFF=Button(toolbar, text="OFF", width=6, command=callbackAnticipationOFF)
 bAntOFF.pack(side=LEFT, padx=2, pady=2)
-get_anticipation_GUI()
+
+bMisc=[]
+bMisc=Button(toolbar, text="zero",  width=6, command=callbackZero)
+bMisc.pack(side=LEFT, padx=2, pady=2)
 
 toolbar.pack(side=TOP, fill=X)
+
+get_anticipation_GUI()
 
 root.mainloop()
 

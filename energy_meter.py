@@ -2,6 +2,13 @@
 
 version='v0.0.2d'
 
+#TODO:
+## - bigger font size
+## - fake head (using factory: fake, Gentec: old,new1,new2)
+
+#NOTES:
+## - power at 18mW, scale +18mW [0.00..0.10] mW axis range
+
 #serial
 import serial
 #log
