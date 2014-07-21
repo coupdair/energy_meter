@@ -3,6 +3,7 @@
 version='v0.0.2d'
 
 #TODO:
+## - add command line option: power or energy mode
 ## - bigger font size
 ## - fake head (using factory: fake, Gentec: old,new1,new2)
 
