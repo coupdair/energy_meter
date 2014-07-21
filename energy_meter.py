@@ -1,9 +1,8 @@
 #!/usr/bin/python
 
-version='v0.0.2d'
+version='v0.0.3'
 
 #TODO:
-## - add command line option: _ power or energy mode; v device
 ## - bigger font size
 ## - fake head (using factory: fake, Gentec: old,new1,new2)
 
@@ -21,8 +20,11 @@ import pylab as pl
 #CLI argument
 import argparse
 
+#command line options
 parser = argparse.ArgumentParser()
-parser.add_argument("--device", help="device path (e.g. /dev/ttyUSB0)", default='/dev/ttyUSB0')
+parser.add_argument("--device",    help="device path (e.g. /dev/ttyUSB0)", default='/dev/ttyUSB0')
+parser.add_argument("--mode",      help="device path (e.g. power or energy)", default='power')
+parser.add_argument("--frequency", help="laser frequency (e.g. 10 Hz)", default=10, type=int)
 args = parser.parse_args()
 
 serialDev=args.device #'/dev/ttyUSB0'
@@ -41,12 +43,13 @@ def log(set):
   f.close()
 
 #power or energy
-frequency=0 #Hz
-#frequency=10 #Hz
+frequency=args.frequency
+if(args.mode=='power'):
+  frequency=0 #Hz
 if (frequency>0):
   name='energy'
   units='mJ'
-  log('configuration: '+name+' ('+units+') at '+frequency+' Hz.\n')
+  log('configuration: '+name+' ('+units+') at '+str(frequency)+' Hz.\n')
 else: #frequency=0 then power, W
   name='power'
   units='mW'
