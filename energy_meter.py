@@ -23,16 +23,27 @@ serialDev='/dev/ttyUSB0'
 ser = serial.Serial(serialDev, 57600, timeout=1)
 #ser = serial.Serial('/dev/ttyACM0', 9600, timeout=2)
 
+#log setup parameter in a file
+def log(set):
+  current_time = time.localtime()
+  strTime=time.strftime('%d/%m/%Y %H:%M:%S', current_time)
+  strData=strTime+",\t" +set
+  #write to file
+  f = open("setup_GentecPlink.txt","a")
+  f.write(strData);#f.write("\n")
+  f.close()
 
-#todo
-frequency=10 #Hz
-name='energy'
-units='mJ'
-
-#if frequency=0 then power, W
-#name='power'
-#units='mW'
-
+#power or energy
+frequency=0 #Hz
+#frequency=10 #Hz
+if (frequency>0):
+  name='energy'
+  units='mJ'
+  log('configuration: '+name+' ('+units+') at '+frequency+' Hz.\n')
+else: #frequency=0 then power, W
+  name='power'
+  units='mW'
+  log('configuration: '+name+' ('+units+').\n')
 
 
 print 'record 1 value from ', serialDev
@@ -102,7 +113,10 @@ while(True):
   #get time
   current_time = time.localtime()
   #convert to float
-  val=float(line)*1000/frequency
+  if (frequency>0):
+    val=float(line)*1000/frequency
+  else:
+    val=float(line)*1000
   #convert to string, i.e. line
   strTime=time.strftime('%d/%m/%Y %H:%M:%S', current_time)
   strData=strTime+",\t" +str(val)
