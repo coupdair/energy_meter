@@ -3,7 +3,7 @@
 version='v0.0.2d'
 
 #TODO:
-## - add command line option: power or energy mode
+## - add command line option: _ power or energy mode; v device
 ## - bigger font size
 ## - fake head (using factory: fake, Gentec: old,new1,new2)
 
@@ -18,8 +18,14 @@ import time
 #graph
 import numpy
 import pylab as pl
+#CLI argument
+import argparse
 
-serialDev='/dev/ttyUSB0'
+parser = argparse.ArgumentParser()
+parser.add_argument("--device", help="device path (e.g. /dev/ttyUSB0)", default='/dev/ttyUSB0')
+args = parser.parse_args()
+
+serialDev=args.device #'/dev/ttyUSB0'
 
 ser = serial.Serial(serialDev, 57600, timeout=1)
 #ser = serial.Serial('/dev/ttyACM0', 9600, timeout=2)
