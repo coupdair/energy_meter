@@ -30,8 +30,8 @@ name='energy'
 units='mJ'
 
 #if frequency=0 then power, W
-name='power'
-units='mW'
+#name='power'
+#units='mW'
 
 
 
@@ -102,7 +102,7 @@ while(True):
   #get time
   current_time = time.localtime()
   #convert to float
-  val=float(line)*1000#/frequency
+  val=float(line)*1000/frequency
   #convert to string, i.e. line
   strTime=time.strftime('%d/%m/%Y %H:%M:%S', current_time)
   strData=strTime+",\t" +str(val)
