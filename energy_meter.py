@@ -5,6 +5,7 @@ version='v0.0.3'
 #TODO:
 ## - bigger font size
 ## - fake head (using factory: fake, Gentec: old,new1,new2)
+## o merge meter and setup (due to serial dialog errors, if separated process)
 
 #NOTES:
 ## - power at 18mW, scale +18mW [0.00..0.10] mW axis range
