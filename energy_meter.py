@@ -159,7 +159,7 @@ while(True):
   pl.xlabel('elapsed time (s)')
   pl.xticks([1,11,21,26,30,31], [30,20,10,5,1,0])
   ##plot
-  pl.plot(data)
+  pl.plot(data, linewidth=3.21)
   pl.draw()
   ##get wavelength in case of setup change
   if(checkWL>checkWL_size):
