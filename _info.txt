@@ -6,7 +6,7 @@ gedit ./energy_meter.py ./energy_meter_setup.py &
 
 #plot data
 ./plot_log.Rsh; evince Rplots.pdf &
-
+./plot_log_tail.Rsh log_GentecPlink.txt 567; evince Rplots.pdf &
 
 #XLP12-3S-H2-D0
 *F02=|Version   3       Name    XLP12-3S-H2-D0  Wavelength      1064    Trig Level      2.500000e-01    Max Analog Output   2.047500e+00    Mode    0       Offset  0       MUL     1.000000e+00    OFF     0.000000e+00PWCStatus       1048575 MinScale        25      LinearCorr      1       Anticipation    1       Attenuator 0|

@@ -11,15 +11,10 @@ t$time=strptime(t$time,'%d/%m/%Y %H:%M:%S')
 
 #tail
 tsize=nrow(t)
-tsize
-size
-tsize-size
 start=tsize-size
 end=tsize
-start
-end
+if(start<1) {start=1}
 t=t[start:end,]
-#t=t[1123:1456,]
 summary(t)
 
 pdf()
