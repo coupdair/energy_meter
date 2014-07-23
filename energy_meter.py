@@ -106,12 +106,8 @@ data.fill(numpy.NAN)
 i=data.size
 ##setup GUI window
 
-from matplotlib.font_manager import FontProperties
-fontP = FontProperties()
-fontP.set_size('xx-large')
-
 pl.ion()
-fig = pl.gcf()
+fig=pl.figure(figsize=(10,10))
 fig.canvas.set_window_title('Power meter ('+'Gentec-Plink='+device_head+')')
 
 #data recording
@@ -155,7 +151,7 @@ while(True):
   data[data.size-1]=val
   ##layout
   pl.clf()
-  fontsize='x-large'
+  fontsize='xx-large'
   pl.title(time.strftime('%Hh%Mmin%Ss', current_time)+'\n'+device_wavelength+', current value='+str(round(val,4))+' '+units, fontsize=fontsize)
   pl.ylabel('\n'+name+' ('+units+')')
   pl.yticks(fontsize=fontsize)
