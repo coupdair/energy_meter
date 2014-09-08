@@ -124,6 +124,27 @@ fig.canvas.set_window_title('Power meter ('+'Gentec-Plink='+device_head+')')
 print '#date (date time),\t',name,'(',units,')'
 checkWL=0
 checkWL_size=5
+
+#GUI
+from Tkinter import *
+
+#GUI
+root = Tk()
+root.title("energy meter")
+
+#tick
+clock = Label(font=("Helvetica", 16))
+clock.pack()
+
+def tick():
+  #get time
+  curtime=time.strftime('%Hh %Mmin %Ss')
+  clock.config(text=curtime)
+  clock.after(1000, tick)
+
+tick()
+#root.mainloop()
+
 #for i in range(0,3):
 while(True):
   #ask and get data

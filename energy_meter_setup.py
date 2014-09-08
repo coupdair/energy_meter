@@ -175,7 +175,7 @@ toolbar.pack(side=TOP, fill=X)
 
 get_anticipation_GUI()
 
-#tick
+#tick (GUI)
 clock = Label(font=("Helvetica", 16))
 clock.pack()
 
