@@ -25,6 +25,13 @@ import pylab as pl
 #CLI argument
 import argparse
 
+#GUI
+from Tkinter import *
+
+#GUI
+root = Tk()
+root.title("energy meter")
+
 #command line options
 parser = argparse.ArgumentParser()
 parser.add_argument("--device",    help="device path (e.g. /dev/ttyUSB0)", default='/dev/ttyUSB0')
@@ -125,28 +132,18 @@ print '#date (date time),\t',name,'(',units,')'
 checkWL=0
 checkWL_size=5
 
-#GUI
-from Tkinter import *
-
-#GUI
-root = Tk()
-root.title("energy meter")
-
 #tick
 clock = Label(font=("Helvetica", 16))
 clock.pack()
+i=0
 
 def tick():
+  global i, device_wavelength, checkWL
   #get time
   curtime=time.strftime('%Hh %Mmin %Ss')
   clock.config(text=curtime)
-  clock.after(1000, tick)
-
-tick()
-#root.mainloop()
-
 #for i in range(0,3):
-while(True):
+#while(True):
   #ask and get data
   ser.write("*CVU");
   ##line = "123.456"
@@ -203,6 +200,8 @@ while(True):
   else:
     checkWL+=1
   #wait a while
-  time.sleep(0.7)
+  clock.after(1000, tick)
 
 
+tick()
+root.mainloop()
