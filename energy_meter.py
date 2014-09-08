@@ -134,19 +134,19 @@ checkWL_size=5
 
 
 #tick
-#
-#    #update GUI
-#    for i in range(0,len(bWL)):
-#      bWL[i]["relief"]=RAISED
-#    bWL[index]["relief"]=SUNKEN
+def callback(value, index):
+  global duration
+  duration=value
+  #update GUI
+  for i in range(0,len(bWL)):
+    bWL[i]["relief"]=RAISED
+  bWL[index]["relief"]=SUNKEN
 
 def callback30():
-  global duration
-  duration=30
+  callback(30,0)
 
 def callback5():
-  global duration
-  duration=5
+  callback(5,1)
 
 #create a toolbar
 toolbar = Frame(root)
