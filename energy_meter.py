@@ -1,9 +1,13 @@
 #!/usr/bin/python
 
-version='v0.0.4a'
+version='v0.0.4b'
+
+#user needs:
+# - tty acces:
+#   $sudo adduser $USER dialout
 
 #TODO:
-## . time elasped: v30s, 1, 2, 3, 4 and .5min
+## . time elasped: v30s, 1, 2, 3, 4 and v5min
 ## - fake head (using factory: fake, Gentec: old,new1,new2)
 ## o merge meter and setup (due to serial dialog errors, if separated process)
 
@@ -178,6 +182,6 @@ while(True):
   else:
     checkWL+=1
   #wait a while
-  time.sleep(0.2)
+  time.sleep(0.7)
 
 
