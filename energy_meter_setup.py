@@ -176,17 +176,21 @@ toolbar.pack(side=TOP, fill=X)
 get_anticipation_GUI()
 
 #tick
-curtime = ''
-clock = Label()
+clock = Label(font=("Helvetica", 16))
 clock.pack()
 
 def tick():
-    global curtime
-    newtime = time.strftime('%H:%M:%S')
-    if newtime != curtime:
-        curtime = newtime
-        clock.config(text=curtime)
-    clock.after(250, tick)
+  #get time
+  curtime=time.strftime('%Hh %Mmin %Ss')
+  #get value
+  ser.write("*CVU");
+  ##line = "123.456"
+  line = ser.readline()
+  line = ser.readline()
+  #print("*CVU=|"+line+"|\n")
+  line=line.replace("\r\n","")
+  clock.config(text=curtime+"      "+line)
+  clock.after(1000, tick)
 
 tick()
 root.mainloop()
