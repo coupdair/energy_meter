@@ -148,6 +148,9 @@ def callback30():
 def callback5():
   callback(5,1)
 
+def callbackQuit():
+  sys.exit(0)
+
 #create a toolbar
 toolbar = Frame(root)
 ##WaveLength
@@ -157,6 +160,10 @@ bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
 
 bWL.append(Button(toolbar, text="5 min", width=6, command=callback5))
 bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
+
+bQuit=[]
+bQuit=Button(toolbar, text="quit",  width=6, command=callbackQuit)
+bQuit.pack(side=LEFT, padx=2, pady=2)
 
 toolbar.pack(side=TOP, fill=X)
 
