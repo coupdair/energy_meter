@@ -164,7 +164,7 @@ while(True):
   pl.xlim([0,data.size])
   if (duration==5):
     pl.xlabel('elapsed time (min)')
-    pl.xticks([1,31,61,2*60+1,3*60+1,4*60+1,5*60+1], [5,4,3,2,1,0.5,0]) #5min
+    pl.xticks([1,61,2*60+1,3*60+1,4*60+1,4*60+31,5*60+1], [5,4,3,2,1,0.5,0]) #5min
   else:
     pl.xlabel('elapsed time (s)')
     pl.xticks([1,11,21,26,30,31], [30,20,10,5,1,0]) #30s
