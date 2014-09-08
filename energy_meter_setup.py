@@ -188,8 +188,8 @@ def tick():
   line = ser.readline()
   line = ser.readline()
   #print("*CVU=|"+line+"|\n")
-  line=line.replace("\r\n","")
-  clock.config(text=curtime+"      "+line)
+  val=float(line)
+  clock.config(text=curtime+"      "+str(round(val,5)))
   clock.after(1000, tick)
 
 tick()
