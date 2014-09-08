@@ -30,7 +30,7 @@ from Tkinter import *
 
 #GUI
 root = Tk()
-root.title("energy meter")
+root.title("duration")
 
 #command line options
 parser = argparse.ArgumentParser()
@@ -132,18 +132,39 @@ print '#date (date time),\t',name,'(',units,')'
 checkWL=0
 checkWL_size=5
 
+
 #tick
-clock = Label(font=("Helvetica", 16))
-clock.pack()
+#
+#    #update GUI
+#    for i in range(0,len(bWL)):
+#      bWL[i]["relief"]=RAISED
+#    bWL[index]["relief"]=SUNKEN
+
+def callback30():
+  global duration
+  duration=30
+
+def callback5():
+  global duration
+  duration=5
+
+#create a toolbar
+toolbar = Frame(root)
+##WaveLength
+bWL=[]
+bWL.append(Button(toolbar, text="30 s",width=6, command=callback30))
+bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
+
+bWL.append(Button(toolbar, text="5 min", width=6, command=callback5))
+bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
+
+toolbar.pack(side=TOP, fill=X)
+
 i=0
 
 def tick():
   global i, device_wavelength, checkWL
-  #get time
-  curtime=time.strftime('%Hh %Mmin %Ss')
-  clock.config(text=curtime)
-#for i in range(0,3):
-#while(True):
+
   #ask and get data
   ser.write("*CVU");
   ##line = "123.456"
@@ -200,7 +221,7 @@ def tick():
   else:
     checkWL+=1
   #wait a while
-  clock.after(1000, tick)
+  bWL[0].after(1000, tick)
 
 
 tick()
