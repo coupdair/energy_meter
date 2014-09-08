@@ -114,12 +114,14 @@ device_head=line
 
 #plot data
 duration=args.duration #30
+data=numpy.empty(5*60+2) #data size 5min
 if (duration==5):
-  data=numpy.empty(5*60+2) #data size 5min
+  data_dur=numpy.empty(5*60+2) #data size 5min
 else:
-  data=numpy.empty(32) #data size 30s
+  data_dur=numpy.empty(32) #data size 30s
 
 data.fill(numpy.NAN)
+data_dur.fill(numpy.NAN)
 i=data.size
 ##setup GUI window
 
@@ -167,10 +169,8 @@ bQuit.pack(side=LEFT, padx=2, pady=2)
 
 toolbar.pack(side=TOP, fill=X)
 
-i=0
-
 def tick():
-  global i, device_wavelength, checkWL
+  global i, device_wavelength, checkWL, data, data_dur
 
   #ask and get data
   ser.write("*CVU");
@@ -205,6 +205,7 @@ def tick():
     data[j]=data[j+1]
   ##set current value
   data[data.size-1]=val
+  data_dur=data #[data.size-data_dur.size-2:data.size-1]
   ##layout
   pl.clf()
   fontsize='xx-large'
@@ -219,7 +220,7 @@ def tick():
     pl.xlabel('elapsed time (s)')
     pl.xticks([1,11,21,26,30,31], [30,20,10,5,1,0]) #30s
   ##plot
-  pl.plot(data, linewidth=3.21)
+  pl.plot(data_dur, linewidth=3.21)
   pl.draw()
   ##get wavelength in case of setup change
   if(checkWL>checkWL_size):
