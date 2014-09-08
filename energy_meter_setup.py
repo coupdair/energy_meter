@@ -175,6 +175,20 @@ toolbar.pack(side=TOP, fill=X)
 
 get_anticipation_GUI()
 
+#tick
+curtime = ''
+clock = Label()
+clock.pack()
+
+def tick():
+    global curtime
+    newtime = time.strftime('%H:%M:%S')
+    if newtime != curtime:
+        curtime = newtime
+        clock.config(text=curtime)
+    clock.after(250, tick)
+
+tick()
 root.mainloop()
 
 
