@@ -26,7 +26,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--device",    help="device path (e.g. /dev/ttyUSB0)", default='/dev/ttyUSB0')
 parser.add_argument("--mode",      help="device path (e.g. power or energy)", default='power')
 parser.add_argument("--frequency", help="laser frequency (e.g. 10 Hz)", default=10, type=int)
-parser.add_argument("-d", help="graph duration (e.g. 5 for 5min)", default=5, type=int)
+parser.add_argument("--duration",  help="graph duration (e.g. 5 for 5min)", default=5, type=int)
 args = parser.parse_args()
 
 serialDev=args.device #'/dev/ttyUSB0'
@@ -102,8 +102,12 @@ print("*NAM=|"+line+"|")
 device_head=line
 
 #plot data
-#data=numpy.empty(32) #data size 30s
-data=numpy.empty(5*60+2) #data size 5min
+duration=args.duration #30
+if (duration==5):
+  data=numpy.empty(5*60+2) #data size 5min
+else:
+  data=numpy.empty(32) #data size 30s
+
 data.fill(numpy.NAN)
 i=data.size
 ##setup GUI window
@@ -158,10 +162,12 @@ while(True):
   pl.ylabel('\n'+name+' ('+units+')')
   pl.yticks(fontsize=fontsize)
   pl.xlim([0,data.size])
-#  pl.xlabel('elapsed time (min)')
-#  pl.xticks([1,11,21,26,30,31], [30,20,10,5,1,0]) #30s
-  pl.xlabel('elapsed time (min)')
-  pl.xticks([1,31,61,2*60+1,3*60+1,4*60+1,5*60+1], [5,4,3,2,1,0.5,0]) #5min
+  if (duration==5):
+    pl.xlabel('elapsed time (min)')
+    pl.xticks([1,31,61,2*60+1,3*60+1,4*60+1,5*60+1], [5,4,3,2,1,0.5,0]) #5min
+  else:
+    pl.xlabel('elapsed time (s)')
+    pl.xticks([1,11,21,26,30,31], [30,20,10,5,1,0]) #30s
   ##plot
   pl.plot(data, linewidth=3.21)
   pl.draw()
