@@ -115,6 +115,9 @@ def callback(value, index):
 def callback1064():
     callback(1064,0)
 
+def callback632():
+    callback(632,1)
+
 def callback532():
     callback(532,1)
 
@@ -151,6 +154,9 @@ toolbar = Frame(root)
 ##WaveLength
 bWL=[]
 bWL.append(Button(toolbar, text="1064 nm",width=6, command=callback1064))
+bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
+
+bWL.append(Button(toolbar, text="632 nm", width=6, command=callback632))
 bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
 
 bWL.append(Button(toolbar, text="532 nm", width=6, command=callback532))
