@@ -8,6 +8,8 @@ version='v0.0.3d'
 #log
 import string
 import time
+#CLI argument
+import argparse
 
 #log setup parameter in a file
 def log(set):
@@ -24,8 +26,14 @@ import serial
 #GUI
 from Tkinter import *
 
+#command line options
+parser = argparse.ArgumentParser()
+parser.add_argument("--device",    help="device path (e.g. /dev/ttyUSB0)", default='/dev/ttyUSB0')
+args = parser.parse_args()
+
+serialDev=args.device #'/dev/ttyUSB0'
+
 #device
-serialDev='/dev/ttyUSB0'
 ser = serial.Serial(serialDev, 57600, timeout=1)
 
 #GUI
