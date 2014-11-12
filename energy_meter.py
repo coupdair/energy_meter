@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-version='v0.0.4b'
+version='v0.1.0d'
 
 #user needs:
-# - tty acces:
+# - tty access:
 #   $sudo adduser $USER dialout
 
 #TODO:
@@ -110,7 +110,7 @@ device_wavelength=get_wavelength_str()
 ser.write("*NAM");
 line = ser.readline()
 print("*NAM=|"+line+"|")
-device_head=line
+device_head=line#.replace("\n\r","")
 
 #plot data
 duration=args.duration #30
@@ -130,7 +130,7 @@ fig=pl.figure(figsize=(10,10))
 fig.canvas.set_window_title('Power meter ('+'Gentec-Plink='+device_head+')')
 
 #data recording
-print '#date (date time),\t',name,'(',units,')'
+print '#device head name;date (date time);',name,'(',units,')'
 checkWL=0
 checkWL_size=5
 
@@ -187,7 +187,7 @@ def tick():
     val=float(line)*1000
   #convert to string, i.e. line
   strTime=time.strftime('%d/%m/%Y %H:%M:%S', current_time)
-  strData=strTime+",\t" +str(val)
+  strData=device_head+";"+strTime+";"+str(val)
   #show
   print strData
   #write to file
