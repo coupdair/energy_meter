@@ -14,4 +14,13 @@ gedit ./energy_meter.py ./energy_meter_setup.py &
 #UP19K-15S-VR
 *F02=|Version   3       Name    UP19K-15S-VR    Wavelength      1064    Trig Level      2.500000e-01    Max Analog Output   2.047500e+00    Mode    0       Offset  0       MUL     1.000000e+00    OFF     0.000000e+00PWCStatus       524280  MinScale        22      LinearCorr      1       Anticipation    1       Attenuator 0|
 
+exit
+
+#test CSV2
+tail -n 136 log_GentecPlink.txt > test_log_XLP12-3S-H2-D0.txt
+tail -n 268 log_GentecPlink.txt | head -n `echo 268-136 | bc ` > test_log_UP19K-15S-VR.txt 
+cat test_log_UP19K-15S-VR.txt   | sed 's/,\t/;/;s/12\/11\/2014/UP19K-15S-VR;12\/11\/2014/'   >  test.txt
+cat test_log_XLP12-3S-H2-D0.txt | sed 's/,\t/;/;s/12\/11\/2014/XLP12-3S-H2-D0;12\/11\/2014/' >> test.txt
+
+
 
