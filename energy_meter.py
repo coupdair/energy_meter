@@ -110,7 +110,9 @@ device_wavelength=get_wavelength_str()
 ser.write("*NAM");
 line = ser.readline()
 print("*NAM=|"+line+"|")
-device_head=line#.replace("\n\r","")
+tmp=line.split("\n")
+tmp=tmp[0]
+device_head=tmp.replace("\t\r\r","")
 
 #plot data
 duration=args.duration #30

@@ -22,5 +22,6 @@ tail -n 268 log_GentecPlink.txt | head -n `echo 268-136 | bc ` > test_log_UP19K-
 cat test_log_UP19K-15S-VR.txt   | sed 's/,\t/;/;s/12\/11\/2014/UP19K-15S-VR;12\/11\/2014/'   >  test.txt
 cat test_log_XLP12-3S-H2-D0.txt | sed 's/,\t/;/;s/12\/11\/2014/XLP12-3S-H2-D0;12\/11\/2014/' >> test.txt
 
+./plot_log.Rsh test.txt ; evince Rplots.pdf &
 
 
