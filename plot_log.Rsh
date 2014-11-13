@@ -24,6 +24,10 @@ len=length(txlp$time)
 i0=len-size
 i1=len
 txlps=txlp$power[i0:i1]
+
+moving_average=function(x,n=10){filter(x,rep(1/n,n), sides=1)}
+tups=moving_average(tups)
+txlps=moving_average(txlps)
 ratio=tups/txlps
 #summary(ratio)
 cat(ratio[length(ratio)],"\n")
@@ -35,5 +39,7 @@ plot(t$time,t$power, type="l", col="white")
 lines( tup$time, tup$power, type="l", col="green")
 lines(txlp$time,txlp$power, type="l", col="blue")
 lines(tims,ratio*10,   type="l", col="black")
+lines(tims,tups,  type="l", col="red")
+lines(tims,txlps, type="l", col="yellow")
 dev.off()
 
