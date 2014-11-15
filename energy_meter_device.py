@@ -13,26 +13,27 @@ class energy_meter_device:
     self.device_head="empty" #device head name that is connected to energy meter (e.g. "UP-1234")
 
   def open(self):
-    self.serial_device=serial.Serial(serial_device_path, 57600, timeout=1) #create and open device as a Serial object
+    self.serial_device=serial.Serial(self.serial_device_path, 57600, timeout=1) #create and open device as a Serial object
 
   def set_device(key):
     self.serial_device.write(key);
     line = self.serial_device.readline()
     print(key+"=|"+line+"|")
 
-  def information(self):
+  def information(self,log):
     print '\nshow serial information:\n'
+    log.log('serial path: '+self.serial_device_path)
     ##Plink version
     self.serial_device.write("*VER");
     line = self.serial_device.readline()
     print("*VER=|"+line+"|")
-    log('open USB-Plink '+line)
+    log.log('device USB-Plink '+line)
     ##power head name
     self.serial_device.write("*NAM");
     line=self.serial_device.readline()
     print("*NAM=|"+line+"|")
     self.device_head=line
-    log('with head '+device_head)
+    log.log('with head '+device_head)
 
   def set_zero():
     self.serial_device.write("*SOU");
