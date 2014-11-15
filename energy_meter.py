@@ -95,6 +95,9 @@ device_info=line.split("\t")
 for i in range(0,len(device_info)-1,2):
   print('device_info['+str(i)+']('+device_info[i]+')='+device_info[i+1])+' ['+str(i+1)+']'
 
+def set_zero():
+    ser.write("*SOU");
+
 def get_wavelength_str():
     #many information
     ser.write("*F01");
@@ -152,6 +155,13 @@ def callback30():
 def callback5():
   callback(5,1)
 
+##set zero offset
+def callbackZero():
+    print "set zero offset."
+    set_zero()
+    #log setup change
+    log("set zero offset.\n")
+
 def callbackQuit():
   sys.exit(0)
 
@@ -164,6 +174,10 @@ bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
 
 bWL.append(Button(toolbar, text="5 min", width=6, command=callback5))
 bWL[len(bWL)-1].pack(side=LEFT, padx=2, pady=2)
+
+bMisc=[]
+bMisc=Button(toolbar, text="zero",  width=6, command=callbackZero)
+bMisc.pack(side=LEFT, padx=2, pady=2)
 
 bQuit=[]
 bQuit=Button(toolbar, text="quit",  width=6, command=callbackQuit)
