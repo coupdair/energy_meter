@@ -24,11 +24,13 @@ class energy_meter_device:
     print '\nshow serial information:\n'
     log.log('serial path: '+self.serial_device_path)
     ##Plink version
+#todo: use self.set_device("*VER")
     self.serial_device.write("*VER");
     line = self.serial_device.readline()
     print("*VER=|"+line+"|")
     log.log('device USB-Plink '+line)
     ##power head name
+#todo: use self.set_device("*NAM")
     self.serial_device.write("*NAM");
     line=self.serial_device.readline()
     print("*NAM=|"+line+"|")
@@ -71,3 +73,9 @@ class energy_meter_device:
     device_info=line.split("\t")
     device_anticipation=int(device_info[25])
     return device_anticipation;
+
+  def set_anticipation_ON():
+    self.set_device("*ANT")
+
+  def set_anticipation_OFF():
+    self.set_device("*ANF")
