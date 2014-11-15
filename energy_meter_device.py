@@ -1,8 +1,5 @@
 #log
 import string
-#CLI argument
-import argparse
-
 #serial
 import serial
 
@@ -19,8 +16,8 @@ class energy_meter_device:
     self.serial_device=serial.Serial(serial_device_path, 57600, timeout=1) #create and open device as a Serial object
 
   def set_device(key):
-    ser.write(key);
-    line = ser.readline()
+    self.serial_device.write(key);
+    line = self.serial_device.readline()
     print(key+"=|"+line+"|")
 
   def information(self):
