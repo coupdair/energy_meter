@@ -5,7 +5,7 @@ import serial
 
 class energy_meter_device:
   """energy meter device through serial device"""
-  version='v0.0.0'
+  version='v0.0.1'
   def __init__(self, serial_device):
     self.serial_device_path=serial_device #'/dev/ttyUSB0'
     self.serial_device=0 #store serial.Serial object (e.g. self.serial_device=serial.Serial(serial_device_path, 57600, timeout=1) )
@@ -15,7 +15,7 @@ class energy_meter_device:
   def open(self):
     self.serial_device=serial.Serial(self.serial_device_path, 57600, timeout=1) #create and open device as a Serial object
 
-  def set_device(key):
+  def set_device(self,key):
     self.serial_device.write(key);
     line = self.serial_device.readline()
     print(key+"=|"+line+"|")
@@ -37,10 +37,10 @@ class energy_meter_device:
     self.device_head=line
     log.log('with head '+self.device_head)
 
-  def set_zero():
-    self.serial_device.write("*SOU");
+  def set_zero(self):
+    self.set_device("*SOU");
 
-  def set_wavelength(value):
+  def set_wavelength(self,value):
     strValue='{:05d}'.format(value)
     print "set "+strValue+" nm."
     self.serial_device.write("*PWC"+strValue);
@@ -65,7 +65,7 @@ class energy_meter_device:
 #    print "get "+str(device_wavelength)+" nm."
     return device_wavelength;
 
-  def get_anticipation():
+  def get_anticipation(self):
     #many information
     self.serial_device.write("*F02");
     line = self.serial_device.readline()
@@ -74,8 +74,8 @@ class energy_meter_device:
     device_anticipation=int(device_info[25])
     return device_anticipation;
 
-  def set_anticipation_ON():
+  def set_anticipation_ON(self):
     self.set_device("*ANT")
 
-  def set_anticipation_OFF():
+  def set_anticipation_OFF(self):
     self.set_device("*ANF")
