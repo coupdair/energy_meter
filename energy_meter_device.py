@@ -11,9 +11,23 @@ class energy_meter_device:
     self.serial_device=0 #store serial.Serial object (e.g. self.serial_device=serial.Serial(serial_device_path, 57600, timeout=1) )
     self.device="empty" #energy meter device name (e.g. "Plink version")
     self.device_head="empty" #device head name that is connected to energy meter (e.g. "UP-1234")
+    self.frequency=0 #0: power, >0: energy at nHz
 
   def open(self):
     self.serial_device=serial.Serial(self.serial_device_path, 57600, timeout=1) #create and open device as a Serial object
+
+  def set_mode(self,mode,frequency,log):
+    self.frequency=frequency
+    if(mode=='power'):
+      self.frequency=0 #Hz
+    if (self.frequency>0):
+      self.name='energy'
+      self.units='mJ'
+      log.log('configuration: '+self.name+' ('+self.units+') at '+str(self.frequency)+' Hz.\n')
+    else: #frequency=0 then power, W
+      self.name='power'
+      self.units='mW'
+      log.log('configuration: '+self.name+' ('+self.units+').\n')
 
   def set_device(self,key):
     self.serial_device.write(key);
@@ -36,6 +50,18 @@ class energy_meter_device:
     print("*NAM=|"+line+"|")
     self.device_head=line
     log.log('with head '+self.device_head)
+
+  def value(self):
+    #ask and get data
+    self.set_device("*CVU")
+    ##line = "123.456"
+    line = ser.readline()
+    print("*CVU=|"+line+"|\n")
+    if (self.frequency>0):
+      val=float(line)*1000/self.frequency #mJ
+    else:
+      val=float(line)*1000 #mW
+    return val
 
   def set_zero(self):
     self.set_device("*SOU");

@@ -56,6 +56,7 @@ def log(set):
   f.close()
 
 #power or energy
+#todo: use nrj.mode(args.mode,args.frequency,log)
 frequency=args.frequency
 if(args.mode=='power'):
   frequency=0 #Hz
