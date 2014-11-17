@@ -38,13 +38,13 @@ class energy_meter_device:
     print '\nshow serial information:\n'
     log.log('serial path: '+self.serial_device_path)
     ##Plink version
-#todo: use self.set_device("*VER")
+#todo or not: use self.set_device("*VER")
     self.serial_device.write("*VER");
     line = self.serial_device.readline()
     print("*VER=|"+line+"|")
     log.log('device USB-Plink '+line)
     ##power head name
-#todo: use self.set_device("*NAM")
+#todo or not: use self.set_device("*NAM")
     self.serial_device.write("*NAM");
     line=self.serial_device.readline()
     print("*NAM=|"+line+"|")
@@ -69,6 +69,7 @@ class energy_meter_device:
   def set_wavelength(self,value):
     strValue='{:05d}'.format(value)
     print "set "+strValue+" nm."
+#todo or not: use self.set_device("*PWC"+strValue)
     self.serial_device.write("*PWC"+strValue);
     line = self.serial_device.readline()
     print("*PWC"+strValue+"=|"+line+"|")
@@ -77,6 +78,7 @@ class energy_meter_device:
 
   def get_wavelength(self):
     #many information
+#todo: use self.set_device("*F01")
     self.serial_device.write("*F01");
     line = self.serial_device.readline()
     line = self.serial_device.readline()
@@ -91,8 +93,18 @@ class energy_meter_device:
 #    print "get "+str(device_wavelength)+" nm."
     return device_wavelength;
 
+  def get_wavelength_str(self):
+    #many information
+    self.set_device("*F01");
+    line = ser.readline()
+    device_info=line.split("\t")
+    #single one
+    device_wavelength=device_info[4]+'='+device_info[5]+" nm"
+    return device_wavelength;
+
   def get_anticipation(self):
     #many information
+#todo: use self.set_device("*F02")
     self.serial_device.write("*F02");
     line = self.serial_device.readline()
     line = self.serial_device.readline()
@@ -105,4 +117,5 @@ class energy_meter_device:
 
   def set_anticipation_OFF(self):
     self.set_device("*ANF")
+
 #energy_meter_device

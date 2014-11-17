@@ -7,8 +7,10 @@ version='v0.1.0d'
 #   $sudo adduser $USER dialout
 
 #TODO:
+## _ pause
+## _ zero in graph with red lines
 ## . time elasped: v30s, 1, 2, 3, 4 and v5min
-## - fake head (using factory: fake, Gentec: old,new1,new2)
+## . fake head (using factory: fake, Gentec: old,new1,new2)
 ## o merge meter and setup (due to serial dialog errors, if separated process)
 
 #NOTES:
