@@ -79,3 +79,4 @@ class energy_meter_device:
 
   def set_anticipation_OFF(self):
     self.set_device("*ANF")
+#energy_meter_device

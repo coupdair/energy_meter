@@ -4,7 +4,7 @@ import time
 
 class logger:
   """log information in a file with date/time stamp."""
-  version='v0.0.0'
+  version='v0.0.1'
   def __init__(self, log_file_path):
     self.file_path=log_file_path #"setup_GentecPlink.txt"
     print('information: log file is "'+self.file_path+'"')
