@@ -21,5 +21,10 @@ print "path=", nrj.serial_device_path
 
 log.log(nrj.serial_device_path+" open")
 
+print('open')
 nrj.open()
+
+print('info')
 nrj.information(log)
+wavelength=nrj.get_wavelength
+print "wave lenght=", wavelength , " nm."

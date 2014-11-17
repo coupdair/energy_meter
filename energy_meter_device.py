@@ -35,7 +35,7 @@ class energy_meter_device:
     line=self.serial_device.readline()
     print("*NAM=|"+line+"|")
     self.device_head=line
-    log.log('with head '+device_head)
+    log.log('with head '+self.device_head)
 
   def set_zero():
     self.serial_device.write("*SOU");
