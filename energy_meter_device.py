@@ -49,7 +49,7 @@ class energy_meter_device:
     if(line!="ACK\n"):
       print("Warning: no acknowledgement received (e.g. ACK!="+line+").?")
 
-  def get_wavelength():
+  def get_wavelength(self):
     #many information
     self.serial_device.write("*F01");
     line = self.serial_device.readline()

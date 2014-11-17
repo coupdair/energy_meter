@@ -26,5 +26,5 @@ nrj.open()
 
 print('info')
 nrj.information(log)
-wavelength=nrj.get_wavelength
+wavelength=nrj.get_wavelength()
 print "wave lenght=", wavelength , " nm."
