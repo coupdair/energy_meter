@@ -32,7 +32,6 @@ class energy_meter_device:
   def set_device(self,key):
     self.serial_device.write(key);
     line = self.serial_device.readline()
-    print(key+"=|"+line+"|")
 
   def information(self,log):
     print '\nshow serial information:\n'
@@ -55,7 +54,7 @@ class energy_meter_device:
     #ask and get data
     self.set_device("*CVU")
     ##line = "123.456"
-    line = ser.readline()
+    line = self.serial_device.readline()
     print("*CVU=|"+line+"|\n")
     if (self.frequency>0):
       val=float(line)*1000/self.frequency #mJ
@@ -65,6 +64,9 @@ class energy_meter_device:
 
   def set_zero(self):
     self.set_device("*SOU");
+    line = self.serial_device.readline()
+    line = self.serial_device.readline()
+    line = self.serial_device.readline()
 
   def set_wavelength(self,value):
     strValue='{:05d}'.format(value)
@@ -79,8 +81,7 @@ class energy_meter_device:
   def get_wavelength(self):
     #many information
 #todo: use self.set_device("*F01")
-    self.serial_device.write("*F01");
-    line = self.serial_device.readline()
+    self.set_device("*F01")
     line = self.serial_device.readline()
 #    print("*F01=|"+line+"|")
     device_info=line.split("\t")

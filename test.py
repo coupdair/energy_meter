@@ -27,13 +27,22 @@ nrj.open()
 print('info')
 nrj.information(log)
 
+print('info BIS')
+nrj.information(log)
+
 #test many functions
 wavelength=nrj.get_wavelength()
 print "wave lenght=", wavelength , " nm."
-#nrj.value()
+print "power=", nrj.value()
+print "power=", nrj.value()
+print "power=", nrj.value()
+print 'set zero'
 nrj.set_zero()
-#nrj.value()
+print "power=", nrj.value()
+print "power=", nrj.value()
+print "power=", nrj.value()
 nrj.set_wavelength(532)
+
 anticipation=nrj.get_anticipation(); print "anticipation=", anticipation
 nrj.set_anticipation_ON()
 anticipation=nrj.get_anticipation(); print "anticipation=", anticipation
