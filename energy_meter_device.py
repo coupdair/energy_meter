@@ -40,13 +40,13 @@ class energy_meter_device:
 #todo or not: use self.set_device("*VER")
     self.serial_device.write("*VER");
     line = self.serial_device.readline()
-    print("*VER=|"+line+"|")
+    #print("*VER=|"+line+"|")
     log.log('device USB-Plink '+line)
     ##power head name
 #todo or not: use self.set_device("*NAM")
     self.serial_device.write("*NAM");
     line=self.serial_device.readline()
-    print("*NAM=|"+line+"|")
+    #print("*NAM=|"+line+"|")
     self.device_head=line
     log.log('with head '+self.device_head)
 
@@ -55,7 +55,7 @@ class energy_meter_device:
     self.set_device("*CVU")
     ##line = "123.456"
     line = self.serial_device.readline()
-    print("*CVU=|"+line+"|\n")
+    #print("*CVU=|"+line+"|\n")
     if (self.frequency>0):
       val=float(line)*1000/self.frequency #mJ
     else:
