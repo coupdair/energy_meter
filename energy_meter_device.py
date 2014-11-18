@@ -74,8 +74,9 @@ class energy_meter_device:
 #todo or not: use self.set_device("*PWC"+strValue)
     self.serial_device.write("*PWC"+strValue);
     line = self.serial_device.readline()
-    print("*PWC"+strValue+"=|"+line+"|")
-    if(line!="ACK\n"):
+    #print("*PWC"+strValue+"=|"+line+"|")
+    line=line.replace('\n','').replace('\r','')
+    if(line!="ACK"):
       print("Warning: no acknowledgement received (e.g. ACK!="+line+").?")
 
   def get_wavelength(self):
