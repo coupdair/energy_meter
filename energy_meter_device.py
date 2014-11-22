@@ -19,6 +19,7 @@ class energy_meter_device:
     print self.__name+"::open()"
 
   def set_mode(self,mode,frequency,log):
+    print self.__name+"::set_mode"
     self.frequency=frequency
     if(mode=='power'):
       self.frequency=0 #Hz

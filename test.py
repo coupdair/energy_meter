@@ -23,3 +23,5 @@ log.log(nrj.serial_device_path+" open")
 
 print('open')
 nrj.open()
+
+nrj.set_mode('power',0,log)
