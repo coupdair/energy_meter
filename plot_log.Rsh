@@ -10,7 +10,7 @@ t$time=strptime(t$time,'%d/%m/%Y %H:%M:%S')
 #summary(t)
 
 
-size=4096
+size=256
 len=length(t$time)
 i0=len-size
 i1=len
@@ -22,7 +22,7 @@ tup=subset(t,subset=head=='UP19K-15S-VR')
 txlp=subset(t,subset=head=='XLP12-3S-H2-D0')
 #summary(txlp)
 
-size=1024
+size=size/4
 len=length(tup$time)
 i0=len-size
 i1=len
