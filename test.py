@@ -23,36 +23,3 @@ log.log(nrj.serial_device_path+" open")
 
 print('open')
 nrj.open()
-
-print('info')
-nrj.information(log)
-
-#test many functions
-wavelength=nrj.get_wavelength()
-print "wave lenght=", wavelength , " nm."
-
-print "power=", nrj.value()
-print "power=", nrj.value()
-print "power=", nrj.value()
-print 'set zero'
-nrj.set_zero()
-print "power=", nrj.value()
-print "power=", nrj.value()
-print "power=", nrj.value()
-
-nrj.set_wavelength(532)
-wavelength=nrj.get_wavelength()
-print "wave lenght=", wavelength , " nm."
-print "power=", nrj.value()
-
-nrj.set_wavelength(1064)
-wavelength=nrj.get_wavelength()
-print "wave lenght=", wavelength , " nm."
-print "power=", nrj.value()
-
-anticipation=nrj.get_anticipation(); print "anticipation=", anticipation
-nrj.set_anticipation_ON()
-anticipation=nrj.get_anticipation(); print "anticipation=", anticipation
-nrj.set_anticipation_OFF()
-anticipation=nrj.get_anticipation(); print "anticipation=", anticipation
-

@@ -6,7 +6,9 @@ import serial
 class energy_meter_device:
   """energy meter device through serial device"""
   version='v0.0.1'
+  __name='energy_meter_device'
   def __init__(self, serial_device):
+    print self.__name+"::init"
     self.serial_device_path=serial_device #'/dev/ttyUSB0'
     self.serial_device=0 #store serial.Serial object (e.g. self.serial_device=serial.Serial(serial_device_path, 57600, timeout=1) )
     self.device="empty" #energy meter device name (e.g. "Plink version")
@@ -14,7 +16,7 @@ class energy_meter_device:
     self.frequency=0 #0: power, >0: energy at nHz
 
   def open(self):
-    self.serial_device=serial.Serial(self.serial_device_path, 57600, timeout=1) #create and open device as a Serial object
+    print self.__name+"::open()"
 
   def set_mode(self,mode,frequency,log):
     self.frequency=frequency
@@ -28,6 +30,21 @@ class energy_meter_device:
       self.name='power'
       self.units='mW'
       log.log('configuration: '+self.name+' ('+self.units+').\n')
+
+class energy_meter_usblink(energy_meter_device):
+  """energy meter device through serial device"""
+  version='v0.0.1'
+
+  def __init__(self, serial_device):
+    print self.__name+"::init"
+    self.serial_device_path=serial_device #'/dev/ttyUSB0'
+    self.serial_device=0 #store serial.Serial object (e.g. self.serial_device=serial.Serial(serial_device_path, 57600, timeout=1) )
+    self.device="empty" #energy meter device name (e.g. "Plink version")
+    self.device_head="empty" #device head name that is connected to energy meter (e.g. "UP-1234")
+    self.frequency=0 #0: power, >0: energy at nHz
+
+  def open(self):
+    self.serial_device=serial.Serial(self.serial_device_path, 57600, timeout=1) #create and open device as a Serial object
 
   def set_device(self,key):
     self.serial_device.write(key);
