@@ -101,6 +101,13 @@ for i in range(0,len(device_info)-1,2):
 def set_zero():
     ser.write("*SOU");
     line = ser.readline()#dummy read for ACK or any else
+    print line
+    line = ser.readline()#dummy read for ACK or any else
+    print line
+    line = ser.readline()#dummy read for ACK or any else
+    print line
+    line = ser.readline()#dummy read for ACK or any else
+    print line
 
 def get_wavelength_str():
     #many information
