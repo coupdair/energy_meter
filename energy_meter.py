@@ -178,6 +178,10 @@ def callbackZero():
 def callbackPause():
   global bPause
   bPause=not bPause
+  if(bPause):
+    bTimeLine[0]["relief"]=SUNKEN
+  else:
+    bTimeLine[0]["relief"]=RAISED
 
 def callbackQuit():
   sys.exit(0)
@@ -208,48 +212,50 @@ toolbar.pack(side=TOP, fill=X)
 def tick():
   global i, device_wavelength, checkWL, data, data_dur, bPause
 
-  if(bPause):
-    bWL[0].after(1000, tick)
-    return
-
-  #ask and get data
-  ser.write("*CVU");
-  ##line = "123.456"
-  line = ser.readline()
-  line = ser.readline()
-###  print("*CVU=|"+line+"|\n")
-  #get time
-  current_time = time.localtime()
-  #convert to float
-  if (frequency>0):
-    val=float(line)*1000/frequency
-  else:
-    val=float(line)*1000
-  #convert to string, i.e. line
-  strTime=time.strftime('%d/%m/%Y %H:%M:%S', current_time)
-  strData=device_head+";"+strTime+";"+str(val)
-  #show
-  print strData
-  #write to file
-  f = open("log_GentecPlink.txt","a")
-  f.write(strData);f.write("\n")
-  f.close()
-  #plot data
-  ##check boundary
-  if(i<0):
-    i=1
-  i-=1
-  ##shift previous values
-  for j in range(i+1,data.size-1):
-#    print(j+1)
-    data[j]=data[j+1]
-  ##set current value
-  data[data.size-1]=val
-  data_dur=data #[data.size-data_dur.size-2:data.size-1]
+  if(not bPause):
+    #ask and get data
+    ser.write("*CVU");
+    ##line = "123.456"
+    line = ser.readline()
+    line = ser.readline()
+###    print("*CVU=|"+line+"|\n")
+    #get time
+    current_time = time.localtime()
+    #convert to float
+    if (frequency>0):
+      val=float(line)*1000/frequency
+    else:
+      val=float(line)*1000
+    #convert to string, i.e. line
+    strTime=time.strftime('%d/%m/%Y %H:%M:%S', current_time)
+    strData=device_head+";"+strTime+";"+str(val)
+    #show
+    print strData
+    #write to file
+    f = open("log_GentecPlink.txt","a")
+    f.write(strData);f.write("\n")
+    f.close()
+    #plot data
+    ##check boundary
+    if(i<0):
+      i=1
+    i-=1
+    ##shift previous values
+    for j in range(i+1,data.size-1):
+#      print(j+1)
+      data[j]=data[j+1]
+    ##set current value
+    data[data.size-1]=val
+    data_dur=data #[data.size-data_dur.size-2:data.size-1]
   ##layout
   pl.clf()
   fontsize='xx-large'
-  pl.title(time.strftime('%Hh%Mmin%Ss', current_time)+'\n'+device_wavelength+', current value='+str(round(val,4))+' '+units, fontsize=fontsize)
+  if(not bPause):
+    title=time.strftime('%Hh%Mmin%Ss', current_time)
+  else:
+    title='pause'
+    val=data[data.size-1]
+  pl.title(title+'\n'+device_wavelength+', current value='+str(round(val,4))+' '+units, fontsize=fontsize)
   pl.ylabel('\n'+name+' ('+units+')')
   pl.yticks(fontsize=fontsize)
   pl.xlim([0,data.size])
