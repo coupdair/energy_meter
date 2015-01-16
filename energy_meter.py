@@ -152,6 +152,8 @@ checkWL_size=5
 
 
 #tick
+bPause=False
+
 def callback(value, index):
   global duration
   duration=value
@@ -173,6 +175,10 @@ def callbackZero():
     #log setup change
     log("set zero offset.\n")
 
+def callbackPause():
+  global bPause
+  bPause=not bPause
+
 def callbackQuit():
   sys.exit(0)
 
@@ -190,14 +196,21 @@ bMisc=[]
 bMisc=Button(toolbar, text="zero",  width=6, command=callbackZero)
 bMisc.pack(side=LEFT, padx=2, pady=2)
 
-bQuit=[]
-bQuit=Button(toolbar, text="quit",  width=6, command=callbackQuit)
-bQuit.pack(side=LEFT, padx=2, pady=2)
+bTimeLine=[]
+bTimeLine.append(Button(toolbar, text="pause",width=6, command=callbackPause))
+bTimeLine[len(bTimeLine)-1].pack(side=LEFT, padx=2, pady=2)
+
+bTimeLine.append(Button(toolbar, text="quit",width=6, command=callbackQuit))
+bTimeLine[len(bTimeLine)-1].pack(side=LEFT, padx=2, pady=2)
 
 toolbar.pack(side=TOP, fill=X)
 
 def tick():
-  global i, device_wavelength, checkWL, data, data_dur
+  global i, device_wavelength, checkWL, data, data_dur, bPause
+
+  if(bPause):
+    bWL[0].after(1000, tick)
+    return
 
   #ask and get data
   ser.write("*CVU");
@@ -257,7 +270,6 @@ def tick():
     checkWL+=1
   #wait a while
   bWL[0].after(1000, tick)
-
 
 tick()
 root.mainloop()
