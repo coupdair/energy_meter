@@ -7,7 +7,7 @@ version='v0.1.0d'
 #   $sudo adduser $USER dialout
 
 #TODO:
-## _ pause
+## v pause
 ## _ zero in graph with red lines
 ## . time elasped: v30s, 1, 2, 3, 4 and v5min
 ## . fake head (using factory: fake, Gentec: old,new1,new2)
@@ -100,6 +100,7 @@ for i in range(0,len(device_info)-1,2):
 
 def set_zero():
     ser.write("*SOU");
+    #dummy read for ACK or any else
     line = ser.readline()#dummy read for ACK or any else
     print line
     line = ser.readline()#dummy read for ACK or any else
@@ -108,6 +109,21 @@ def set_zero():
     print line
     line = ser.readline()#dummy read for ACK or any else
     print line
+    #wait for stabilisation
+    time.sleep(2)
+    #skip 2 dummy values
+    #ask and get data
+    ser.write("*CVU");
+    ##line = "123.456"
+    line = ser.readline()
+    line = ser.readline()
+    print("*CVU=|"+line+"|\n")
+    #ask and get data
+    ser.write("*CVU");
+    ##line = "123.456"
+    line = ser.readline()
+    line = ser.readline()
+    print("*CVU=|"+line+"|\n")
 
 def get_wavelength_str():
     #many information
