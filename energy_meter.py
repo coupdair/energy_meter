@@ -7,7 +7,7 @@ version='v0.1.0d'
 #   $sudo adduser $USER dialout
 
 #TODO:
-## _ pause
+## v pause
 ## _ zero in graph with red lines
 ## . time elasped: v30s, 1, 2, 3, 4 and v5min
 ## . fake head (using factory: fake, Gentec: old,new1,new2)
@@ -100,7 +100,30 @@ for i in range(0,len(device_info)-1,2):
 
 def set_zero():
     ser.write("*SOU");
+    #dummy read for ACK or any else
     line = ser.readline()#dummy read for ACK or any else
+    print line
+    line = ser.readline()#dummy read for ACK or any else
+    print line
+    line = ser.readline()#dummy read for ACK or any else
+    print line
+    line = ser.readline()#dummy read for ACK or any else
+    print line
+    #wait for stabilisation
+    time.sleep(2)
+    #skip 2 dummy values
+    #ask and get data
+    ser.write("*CVU");
+    ##line = "123.456"
+    line = ser.readline()
+    line = ser.readline()
+    print("*CVU=|"+line+"|\n")
+    #ask and get data
+    ser.write("*CVU");
+    ##line = "123.456"
+    line = ser.readline()
+    line = ser.readline()
+    print("*CVU=|"+line+"|\n")
 
 def get_wavelength_str():
     #many information
@@ -145,6 +168,8 @@ checkWL_size=5
 
 
 #tick
+bPause=False
+
 def callback(value, index):
   global duration
   duration=value
@@ -166,6 +191,14 @@ def callbackZero():
     #log setup change
     log("set zero offset.\n")
 
+def callbackPause():
+  global bPause
+  bPause=not bPause
+  if(bPause):
+    bTimeLine[0]["relief"]=SUNKEN
+  else:
+    bTimeLine[0]["relief"]=RAISED
+
 def callbackQuit():
   sys.exit(0)
 
@@ -183,53 +216,62 @@ bMisc=[]
 bMisc=Button(toolbar, text="zero",  width=6, command=callbackZero)
 bMisc.pack(side=LEFT, padx=2, pady=2)
 
-bQuit=[]
-bQuit=Button(toolbar, text="quit",  width=6, command=callbackQuit)
-bQuit.pack(side=LEFT, padx=2, pady=2)
+bTimeLine=[]
+bTimeLine.append(Button(toolbar, text="pause",width=6, command=callbackPause))
+bTimeLine[len(bTimeLine)-1].pack(side=LEFT, padx=2, pady=2)
+
+bTimeLine.append(Button(toolbar, text="quit",width=6, command=callbackQuit))
+bTimeLine[len(bTimeLine)-1].pack(side=LEFT, padx=2, pady=2)
 
 toolbar.pack(side=TOP, fill=X)
 
 def tick():
-  global i, device_wavelength, checkWL, data, data_dur
+  global i, device_wavelength, checkWL, data, data_dur, bPause
 
-  #ask and get data
-  ser.write("*CVU");
-  ##line = "123.456"
-  line = ser.readline()
-  line = ser.readline()
-###  print("*CVU=|"+line+"|\n")
-  #get time
-  current_time = time.localtime()
-  #convert to float
-  if (frequency>0):
-    val=float(line)*1000/frequency
-  else:
-    val=float(line)*1000
-  #convert to string, i.e. line
-  strTime=time.strftime('%d/%m/%Y %H:%M:%S', current_time)
-  strData=device_head+";"+strTime+";"+str(val)
-  #show
-  print strData
-  #write to file
-  f = open("log_GentecPlink.txt","a")
-  f.write(strData);f.write("\n")
-  f.close()
-  #plot data
-  ##check boundary
-  if(i<0):
-    i=1
-  i-=1
-  ##shift previous values
-  for j in range(i+1,data.size-1):
-#    print(j+1)
-    data[j]=data[j+1]
-  ##set current value
-  data[data.size-1]=val
-  data_dur=data #[data.size-data_dur.size-2:data.size-1]
+  if(not bPause):
+    #ask and get data
+    ser.write("*CVU");
+    ##line = "123.456"
+    line = ser.readline()
+    line = ser.readline()
+###    print("*CVU=|"+line+"|\n")
+    #get time
+    current_time = time.localtime()
+    #convert to float
+    if (frequency>0):
+      val=float(line)*1000/frequency
+    else:
+      val=float(line)*1000
+    #convert to string, i.e. line
+    strTime=time.strftime('%d/%m/%Y %H:%M:%S', current_time)
+    strData=device_head+";"+strTime+";"+str(val)
+    #show
+    print strData
+    #write to file
+    f = open("log_GentecPlink.txt","a")
+    f.write(strData);f.write("\n")
+    f.close()
+    #plot data
+    ##check boundary
+    if(i<0):
+      i=1
+    i-=1
+    ##shift previous values
+    for j in range(i+1,data.size-1):
+#      print(j+1)
+      data[j]=data[j+1]
+    ##set current value
+    data[data.size-1]=val
+    data_dur=data #[data.size-data_dur.size-2:data.size-1]
   ##layout
   pl.clf()
   fontsize='xx-large'
-  pl.title(time.strftime('%Hh%Mmin%Ss', current_time)+'\n'+device_wavelength+', current value='+str(round(val,4))+' '+units, fontsize=fontsize)
+  if(not bPause):
+    title=time.strftime('%Hh%Mmin%Ss', current_time)
+  else:
+    title='pause'
+    val=data[data.size-1]
+  pl.title(title+'\n'+device_wavelength+', current value='+str(round(val,4))+' '+units, fontsize=fontsize)
   pl.ylabel('\n'+name+' ('+units+')')
   pl.yticks(fontsize=fontsize)
   pl.xlim([0,data.size])
@@ -250,7 +292,6 @@ def tick():
     checkWL+=1
   #wait a while
   bWL[0].after(1000, tick)
-
 
 tick()
 root.mainloop()
