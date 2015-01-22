@@ -102,16 +102,45 @@ def set_zero():
     ser.write("*SOU");
     #dummy read for ACK or any else
     line = ser.readline()#dummy read for ACK or any else
-    print line
+    print '/' #,end='\r')
     line = ser.readline()#dummy read for ACK or any else
-    print line
+    print('-')#,end='\r')
     line = ser.readline()#dummy read for ACK or any else
-    print line
+    print('\\')#,end='\r')
     line = ser.readline()#dummy read for ACK or any else
-    print line
+    print('|')#,end='\r')
     #wait for stabilisation
-    time.sleep(2)
-    #skip 2 dummy values
+    time.sleep(1)
+    print('/')#,end='\r')
+    time.sleep(1)
+    print('-')#,end='\r')
+    time.sleep(1)
+    print('\\')#,end='\r')
+    #skip 5 dummy values
+    #ask and get data
+    ser.write("*CVU");
+    ##line = "123.456"
+    line = ser.readline()
+    line = ser.readline()
+    print("*CVU=|"+line+"|\n")
+    #ask and get data
+    ser.write("*CVU");
+    ##line = "123.456"
+    line = ser.readline()
+    line = ser.readline()
+    print("*CVU=|"+line+"|\n")
+    #ask and get data
+    ser.write("*CVU");
+    ##line = "123.456"
+    line = ser.readline()
+    line = ser.readline()
+    print("*CVU=|"+line+"|\n")
+    #ask and get data
+    ser.write("*CVU");
+    ##line = "123.456"
+    line = ser.readline()
+    line = ser.readline()
+    print("*CVU=|"+line+"|\n")
     #ask and get data
     ser.write("*CVU");
     ##line = "123.456"
