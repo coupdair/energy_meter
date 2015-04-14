@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.1.0d'
+version='v0.1.0'
 
 #user needs:
 # - tty access:
