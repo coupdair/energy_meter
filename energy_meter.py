@@ -320,7 +320,7 @@ def tick():
     pl.xticks([1,11,21,26,30,31], [30,20,10,5,1,0]) #30s
   ##plot
   pl.plot(data_dur, linewidth=3.21)
-  ###pl.plot(run_avg
+  pl.plot(run_avg)
   pl.draw()
   ##get wavelength in case of setup change
   if(checkWL>checkWL_size):
@@ -329,7 +329,8 @@ def tick():
   else:
     checkWL+=1
   #wait a while
-  bWL[0].after(1000, tick)
+  bWL[0].after(567, tick)
+#  bWL[0].after(1000, tick)
 
 tick()
 root.mainloop()
