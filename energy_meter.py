@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.1.0'
+version='v0.1.1d'
 
 #user needs:
 # - tty access:
@@ -181,6 +181,9 @@ if (duration==5):
 else:
   data_dur=numpy.empty(32) #data size 30s
 
+#statistics
+run_avg=numpy.empty(16) #running average with size
+
 data.fill(numpy.NAN)
 data_dur.fill(numpy.NAN)
 i=data.size
@@ -292,6 +295,9 @@ def tick():
     ##set current value
     data[data.size-1]=val
     data_dur=data #[data.size-data_dur.size-2:data.size-1]
+    #statistics
+    ##run_avg=numpy.mean(data[data.size-run_avg.size-1:data.size-1])
+    print(numpy.mean(data[data.size-run_avg.size-1:data.size-1]))
   ##layout
   pl.clf()
   fontsize='xx-large'
