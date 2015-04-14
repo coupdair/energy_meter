@@ -182,7 +182,8 @@ else:
   data_dur=numpy.empty(32) #data size 30s
 
 #statistics
-run_avg=numpy.empty(16) #running average with size
+run_avg_size=16 #running average size
+run_avg=numpy.empty(data.size) #running average data
 
 data.fill(numpy.NAN)
 data_dur.fill(numpy.NAN)
@@ -292,12 +293,13 @@ def tick():
     for j in range(i+1,data.size-1):
 #      print(j+1)
       data[j]=data[j+1]
+      run_avg[j]=run_avg[j+1]
     ##set current value
     data[data.size-1]=val
     data_dur=data #[data.size-data_dur.size-2:data.size-1]
     #statistics
-    ##run_avg=numpy.mean(data[data.size-run_avg.size-1:data.size-1])
-    print(numpy.mean(data[data.size-run_avg.size-1:data.size-1]))
+    run_avg[data.size-1]=numpy.mean(data[data.size-run_avg_size-1:data.size-1])
+    print(run_avg[data.size-1])
   ##layout
   pl.clf()
   fontsize='xx-large'
@@ -306,7 +308,7 @@ def tick():
   else:
     title='pause'
     val=data[data.size-1]
-  pl.title(title+'\n'+device_wavelength+', current value='+str(round(val,4))+' '+units, fontsize=fontsize)
+  pl.title(title+'\n'+device_wavelength+', current value='+str(round(val,4))+' '+units+', mean='+str(round(run_avg[data.size-1],4))+' '+units, fontsize=fontsize)
   pl.ylabel('\n'+name+' ('+units+')')
   pl.yticks(fontsize=fontsize)
   pl.xlim([0,data.size])
@@ -318,6 +320,7 @@ def tick():
     pl.xticks([1,11,21,26,30,31], [30,20,10,5,1,0]) #30s
   ##plot
   pl.plot(data_dur, linewidth=3.21)
+  ###pl.plot(run_avg
   pl.draw()
   ##get wavelength in case of setup change
   if(checkWL>checkWL_size):
