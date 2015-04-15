@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.1.1d'
+version='v0.1.1'
 
 #user needs:
 # - tty access:
@@ -8,7 +8,7 @@ version='v0.1.1d'
 
 #TODO:
 ## v pause
-## . average(, ?median(, ?CLOption for size
+## . .median( (or .mean() ), ?CLOption for size
 ## _ zero in graph with red lines
 ## . time elasped: v30s, 1, 2, 3, 4 and v5min
 ## . fake head (using factory: fake, Gentec: old,new1,new2)
