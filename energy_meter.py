@@ -8,6 +8,7 @@ version='v0.1.1d'
 
 #TODO:
 ## v pause
+## . average(, ?median(, ?CLOption for size
 ## _ zero in graph with red lines
 ## . time elasped: v30s, 1, 2, 3, 4 and v5min
 ## . fake head (using factory: fake, Gentec: old,new1,new2)
@@ -184,6 +185,7 @@ else:
 #statistics
 run_avg_size=16 #running average size
 run_avg=numpy.empty(data.size) #running average data
+run_avg.fill(0)
 
 data.fill(numpy.NAN)
 data_dur.fill(numpy.NAN)
