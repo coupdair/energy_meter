@@ -303,8 +303,8 @@ def tick():
     data[data.size-1]=val
     data_dur=data #[data.size-data_dur.size-2:data.size-1]
     #statistics
-    run_avg[data.size-1]=numpy.mean(data[data.size-run_avg_size-1:data.size-1])
-    print(run_avg[data.size-1])
+    run_avg[data.size-run_avg_size/2-1]=numpy.mean(data[data.size-run_avg_size-1:data.size-1])
+    print(run_avg[data.size-run_avg_size/2-1])
   ##layout
   pl.clf()
   fontsize='xx-large'
