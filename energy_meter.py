@@ -191,7 +191,8 @@ data.fill(numpy.NAN)
 data_dur.fill(numpy.NAN)
 run_avg.fill(numpy.NAN)
 run_avg_limit.fill(numpy.NAN)
-run_avg_limit[data.size-run_avg_size]=-1; run_avg_limit[data.size-run_avg_size+1]=1;
+run_avg_limit_i=data.size-run_avg_size
+run_avg_limit[run_avg_limit_i]=-1; run_avg_limit[run_avg_limit_i+1]=1;
 i=data.size
 ##setup GUI window
 
@@ -305,6 +306,7 @@ def tick():
     #statistics
     run_avg[data.size-run_avg_size/2-1]=numpy.median(data[data.size-run_avg_size-1:data.size-1])
     print(run_avg[data.size-run_avg_size/2-1])
+    run_avg_limit[run_avg_limit_i]=numpy.nanmin(data); run_avg_limit[run_avg_limit_i+1]=numpy.nanmax(data);
   ##layout
   pl.clf()
   fontsize='xx-large'
