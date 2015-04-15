@@ -183,15 +183,15 @@ if (duration==5):
 else:
   data_dur=numpy.empty(32) #data size 30s
 
-#statistics
+##statistics
 run_avg_size=args.stat_run_average_size #running average size (from command line or default)
 run_avg=numpy.empty(data.size) #running average data
 run_avg_limit=numpy.empty(data.size) #running average data
 
-#pause
+##pause
 pause=numpy.empty(data.size) #pause position
 
-#init data: fill with NaN for graph
+##init data: fill with NaN for graph
 data.fill(numpy.NAN)
 data_dur.fill(numpy.NAN)
 run_avg.fill(numpy.NAN)
@@ -240,12 +240,16 @@ def callbackZero():
 def callbackPause():
   global bPause
   global pause
+  global data
   bPause=not bPause
   if(bPause):
+    #pressed
     bTimeLine[0]["relief"]=SUNKEN
-    pause[data.size-3]=1
-    pause[data.size-2]=-1
+    #add pause in graph data
+    pause[data.size-3]=numpy.nanmin(data)
+    pause[data.size-2]=numpy.nanmax(data)
   else:
+    #unpressed
     bTimeLine[0]["relief"]=RAISED
 
 def callbackQuit():
