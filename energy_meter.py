@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.1.1'
+version='v0.1.2d'
 
 #user needs:
 # - tty access:
@@ -8,7 +8,7 @@ version='v0.1.1'
 
 #TODO:
 ## v pause
-## . .median( (or .mean() ), ?CLOption for size
+## v .median( (or .mean() ), CLOption for size
 ## _ zero in graph with red lines
 ## . time elasped: v30s, 1, 2, 3, 4 and v5min
 ## . fake head (using factory: fake, Gentec: old,new1,new2)
@@ -41,6 +41,7 @@ parser.add_argument("--device",    help="device path (e.g. /dev/ttyUSB0)", defau
 parser.add_argument("--mode",      help="device path (e.g. power or energy)", default='power')
 parser.add_argument("--frequency", help="laser frequency (e.g. 10 Hz)", default=10, type=int)
 parser.add_argument("--duration",  help="graph duration (e.g. 5 for 5min)", default=5, type=int)
+parser.add_argument('-s',"--stat-run-average-size", help="running average size (e.g. mean on 16 samples)", default=16, type=int)
 args = parser.parse_args()
 
 serialDev=args.device #'/dev/ttyUSB0'
@@ -183,7 +184,7 @@ else:
   data_dur=numpy.empty(32) #data size 30s
 
 #statistics
-run_avg_size=16 #running average size
+run_avg_size=args.stat_run_average_size #running average size (from command line or default)
 run_avg=numpy.empty(data.size) #running average data
 run_avg_limit=numpy.empty(data.size) #running average data
 
