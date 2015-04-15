@@ -185,10 +185,13 @@ else:
 #statistics
 run_avg_size=16 #running average size
 run_avg=numpy.empty(data.size) #running average data
+run_avg_limit=numpy.empty(data.size) #running average data
 
 data.fill(numpy.NAN)
 data_dur.fill(numpy.NAN)
 run_avg.fill(numpy.NAN)
+run_avg_limit.fill(numpy.NAN)
+run_avg_limit[data.size-run_avg_size]=-1; run_avg_limit[data.size-run_avg_size+1]=1;
 i=data.size
 ##setup GUI window
 
@@ -323,6 +326,7 @@ def tick():
   ##plot
   pl.plot(data_dur, linewidth=3.21)
   pl.plot(run_avg)
+  pl.plot(run_avg_limit)
   pl.draw()
   ##get wavelength in case of setup change
   if(checkWL>checkWL_size):
