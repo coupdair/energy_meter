@@ -188,13 +188,19 @@ run_avg_size=args.stat_run_average_size #running average size (from command line
 run_avg=numpy.empty(data.size) #running average data
 run_avg_limit=numpy.empty(data.size) #running average data
 
+#pause
+pause=numpy.empty(data.size) #pause position
+
+#init data: fill with NaN for graph
 data.fill(numpy.NAN)
 data_dur.fill(numpy.NAN)
 run_avg.fill(numpy.NAN)
 run_avg_limit.fill(numpy.NAN)
+pause.fill(numpy.NAN)
 run_avg_limit_i=data.size-run_avg_size
 run_avg_limit[run_avg_limit_i]=-1; run_avg_limit[run_avg_limit_i+1]=1;
 i=data.size
+
 ##setup GUI window
 
 pl.ion()
@@ -233,9 +239,12 @@ def callbackZero():
 
 def callbackPause():
   global bPause
+  global pause
   bPause=not bPause
   if(bPause):
     bTimeLine[0]["relief"]=SUNKEN
+    pause[data.size-3]=1
+    pause[data.size-2]=-1
   else:
     bTimeLine[0]["relief"]=RAISED
 
@@ -301,6 +310,7 @@ def tick():
 #      print(j+1)
       data[j]=data[j+1]
       run_avg[j]=run_avg[j+1]
+      pause[j]=pause[j+1]
     ##set current value
     data[data.size-1]=val
     data_dur=data #[data.size-data_dur.size-2:data.size-1]
