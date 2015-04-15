@@ -303,7 +303,7 @@ def tick():
     data[data.size-1]=val
     data_dur=data #[data.size-data_dur.size-2:data.size-1]
     #statistics
-    run_avg[data.size-run_avg_size/2-1]=numpy.mean(data[data.size-run_avg_size-1:data.size-1])
+    run_avg[data.size-run_avg_size/2-1]=numpy.median(data[data.size-run_avg_size-1:data.size-1])
     print(run_avg[data.size-run_avg_size/2-1])
   ##layout
   pl.clf()
@@ -313,7 +313,7 @@ def tick():
   else:
     title='pause'
     val=data[data.size-1]
-  pl.title(title+'\n'+device_wavelength+', current value='+str(round(val,4))+' '+units+', mean='+str(round(run_avg[data.size-1],4))+' '+units, fontsize=fontsize)
+  pl.title(title+'\n'+device_wavelength+', current value='+str(round(val,4))+' '+units+', mean='+str(round(run_avg[data.size-run_avg_size/2-1],4))+' '+units, fontsize=fontsize)
   pl.ylabel('\n'+name+' ('+units+')')
   pl.yticks(fontsize=fontsize)
   pl.xlim([0,data.size])
