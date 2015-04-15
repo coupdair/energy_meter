@@ -185,10 +185,10 @@ else:
 #statistics
 run_avg_size=16 #running average size
 run_avg=numpy.empty(data.size) #running average data
-run_avg.fill(0)
 
 data.fill(numpy.NAN)
 data_dur.fill(numpy.NAN)
+run_avg.fill(numpy.NAN)
 i=data.size
 ##setup GUI window
 
