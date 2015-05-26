@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.1.0d'
+version='v0.1.2d'
 
 #user needs:
 # - tty access:
@@ -8,6 +8,7 @@ version='v0.1.0d'
 
 #TODO:
 ## v pause
+## v .median( (or .mean() ), CLOption for size
 ## _ zero in graph with red lines
 ## . time elasped: v30s, 1, 2, 3, 4 and v5min
 ## . fake head (using factory: fake, Gentec: old,new1,new2)
@@ -40,6 +41,7 @@ parser.add_argument("--device",    help="device path (e.g. /dev/ttyUSB0)", defau
 parser.add_argument("--mode",      help="device path (e.g. power or energy)", default='power')
 parser.add_argument("--frequency", help="laser frequency (e.g. 10 Hz)", default=10, type=int)
 parser.add_argument("--duration",  help="graph duration (e.g. 5 for 5min)", default=5, type=int)
+parser.add_argument('-s',"--stat-run-average-size", help="running average size (e.g. mean on 16 samples)", default=16, type=int)
 args = parser.parse_args()
 
 serialDev=args.device #'/dev/ttyUSB0'
@@ -102,16 +104,45 @@ def set_zero():
     ser.write("*SOU");
     #dummy read for ACK or any else
     line = ser.readline()#dummy read for ACK or any else
-    print line
+    print '/' #,end='\r')
     line = ser.readline()#dummy read for ACK or any else
-    print line
+    print('-')#,end='\r')
     line = ser.readline()#dummy read for ACK or any else
-    print line
+    print('\\')#,end='\r')
     line = ser.readline()#dummy read for ACK or any else
-    print line
+    print('|')#,end='\r')
     #wait for stabilisation
-    time.sleep(2)
-    #skip 2 dummy values
+    time.sleep(1)
+    print('/')#,end='\r')
+    time.sleep(1)
+    print('-')#,end='\r')
+    time.sleep(1)
+    print('\\')#,end='\r')
+    #skip 5 dummy values
+    #ask and get data
+    ser.write("*CVU");
+    ##line = "123.456"
+    line = ser.readline()
+    line = ser.readline()
+    print("*CVU=|"+line+"|\n")
+    #ask and get data
+    ser.write("*CVU");
+    ##line = "123.456"
+    line = ser.readline()
+    line = ser.readline()
+    print("*CVU=|"+line+"|\n")
+    #ask and get data
+    ser.write("*CVU");
+    ##line = "123.456"
+    line = ser.readline()
+    line = ser.readline()
+    print("*CVU=|"+line+"|\n")
+    #ask and get data
+    ser.write("*CVU");
+    ##line = "123.456"
+    line = ser.readline()
+    line = ser.readline()
+    print("*CVU=|"+line+"|\n")
     #ask and get data
     ser.write("*CVU");
     ##line = "123.456"
@@ -152,9 +183,24 @@ if (duration==5):
 else:
   data_dur=numpy.empty(32) #data size 30s
 
+##statistics
+run_avg_size=args.stat_run_average_size #running average size (from command line or default)
+run_avg=numpy.empty(data.size) #running average data
+run_avg_limit=numpy.empty(data.size) #running average data
+
+##pause
+pause=numpy.empty(data.size) #pause position
+
+##init data: fill with NaN for graph
 data.fill(numpy.NAN)
 data_dur.fill(numpy.NAN)
+run_avg.fill(numpy.NAN)
+run_avg_limit.fill(numpy.NAN)
+pause.fill(numpy.NAN)
+run_avg_limit_i=data.size-run_avg_size
+run_avg_limit[run_avg_limit_i]=-1; run_avg_limit[run_avg_limit_i+1]=1;
 i=data.size
+
 ##setup GUI window
 
 pl.ion()
@@ -193,10 +239,17 @@ def callbackZero():
 
 def callbackPause():
   global bPause
+  global pause
+  global data
   bPause=not bPause
   if(bPause):
+    #pressed
     bTimeLine[0]["relief"]=SUNKEN
+    #add pause in graph data
+    pause[data.size-3]=numpy.nanmin(data)
+    pause[data.size-2]=numpy.nanmax(data)
   else:
+    #unpressed
     bTimeLine[0]["relief"]=RAISED
 
 def callbackQuit():
@@ -260,9 +313,15 @@ def tick():
     for j in range(i+1,data.size-1):
 #      print(j+1)
       data[j]=data[j+1]
+      run_avg[j]=run_avg[j+1]
+      pause[j]=pause[j+1]
     ##set current value
     data[data.size-1]=val
     data_dur=data #[data.size-data_dur.size-2:data.size-1]
+    #statistics
+    run_avg[data.size-run_avg_size/2-1]=numpy.median(data[data.size-run_avg_size-1:data.size-1])
+    print(run_avg[data.size-run_avg_size/2-1])
+    run_avg_limit[run_avg_limit_i]=numpy.nanmin(data); run_avg_limit[run_avg_limit_i+1]=numpy.nanmax(data);
   ##layout
   pl.clf()
   fontsize='xx-large'
@@ -271,7 +330,7 @@ def tick():
   else:
     title='pause'
     val=data[data.size-1]
-  pl.title(title+'\n'+device_wavelength+', current value='+str(round(val,4))+' '+units, fontsize=fontsize)
+  pl.title(title+'\n'+device_wavelength+', current value='+str(round(val,4))+' '+units+', mean='+str(round(run_avg[data.size-run_avg_size/2-1],4))+' '+units, fontsize=fontsize)
   pl.ylabel('\n'+name+' ('+units+')')
   pl.yticks(fontsize=fontsize)
   pl.xlim([0,data.size])
@@ -283,6 +342,8 @@ def tick():
     pl.xticks([1,11,21,26,30,31], [30,20,10,5,1,0]) #30s
   ##plot
   pl.plot(data_dur, linewidth=3.21)
+  pl.plot(run_avg)
+  pl.plot(run_avg_limit)
   pl.draw()
   ##get wavelength in case of setup change
   if(checkWL>checkWL_size):
@@ -291,7 +352,8 @@ def tick():
   else:
     checkWL+=1
   #wait a while
-  bWL[0].after(1000, tick)
+  bWL[0].after(567, tick)
+#  bWL[0].after(1000, tick)
 
 tick()
 root.mainloop()
