@@ -31,18 +31,20 @@ i1=len
 if(i0<1) i0=1
 tims= tup$time[i0:i1]
 tups= tup$power[i0:i1]
+tup_empty=!(len=0)
 len=length(txlp$time)
 i0=len-size
 i1=len
 if(i0<1) i0=1
 txlps=txlp$power[i0:i1]
+txlp_empty=!(len=0)
 
 filter_size=30
 moving_average=function(x,n=10){filter(x,rep(1/n,n), sides=1)}
 i0=size-filter_size
 timl=tims[i0]
-tups=moving_average(tups)#,n=filter_size)
-txlps=moving_average(txlps)#,n=filter_size)
+if(!tup_empty)  tups=moving_average(tups)#,n=filter_size)
+if(!txlp_empty) txlps=moving_average(txlps)#,n=filter_size)
 ratio=tups/txlps
 #summary(ratio)
 cat(tups[length(tups)],"  ",txlps[length(txlps)],"  ",ratio[length(ratio)],"\n")
