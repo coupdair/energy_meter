@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-version='v0.1.2d'
+version='v0.2.0'
 
 #user needs:
 # - tty access:
@@ -319,7 +319,7 @@ def tick():
     data[data.size-1]=val
     data_dur=data #[data.size-data_dur.size-2:data.size-1]
     #statistics
-    run_avg[data.size-run_avg_size/2-1]=numpy.median(data[data.size-run_avg_size-1:data.size-1])
+    run_avg[data.size-run_avg_size/2-1]=numpy.nanmean(data[data.size-run_avg_size-1:data.size-1]) #numpy.median, numpy.nanmean
     print(run_avg[data.size-run_avg_size/2-1])
     run_avg_limit[run_avg_limit_i]=numpy.nanmin(data); run_avg_limit[run_avg_limit_i+1]=numpy.nanmax(data);
   ##layout
