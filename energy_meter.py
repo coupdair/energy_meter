@@ -89,6 +89,9 @@ print '\nshow serial information:\n'
 ser.write("*VER");
 line = ser.readline()
 print("*VER=|"+line+"|")
+ser.write("*VER"); #dummy
+line = ser.readline() #dummy
+print("*VER=|"+line+"|") #dummy
 
 #many information
 ser.write("*F02");
@@ -158,10 +161,12 @@ def set_zero():
 
 def get_wavelength_str():
     #many information
+    line = ser.readline() #dummy
     ser.write("*F01");
     line = ser.readline()
     line = ser.readline()
     device_info=line.split("\t")
+    print device_info #dummy
     #single one
     device_wavelength=device_info[4]+'='+device_info[5]+" nm"
     return device_wavelength;
