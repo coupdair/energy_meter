@@ -1,2 +1,1 @@
-energy_meter.py --device COM4 -s 32
-
+energy_meter.py --device COM7
