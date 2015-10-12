@@ -224,6 +224,7 @@ bPause=False
 def callback(value, index):
   global duration
   duration=value
+  print("index=",index)
   #update GUI
   for i in range(0,len(bWL)):
     bWL[i]["relief"]=RAISED

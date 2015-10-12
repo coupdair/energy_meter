@@ -127,13 +127,13 @@ def callback632():
     callback(632,1)
 
 def callback532():
-    callback(532,1)
+    callback(532,2)
 
 def callback308():
-    callback(308,2)
+    callback(308,3)
 
 def callback266():
-    callback(266,3)
+    callback(266,4)
 
 ##Anticipation ON/OFF
 def callbackAnticipationON():
