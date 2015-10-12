@@ -189,6 +189,8 @@ toolbar.pack(side=TOP, fill=X)
 
 get_anticipation_GUI()
 
+line = ser.readline()
+
 #tick (GUI)
 clock = Label(font=("Helvetica", 16))
 clock.pack()
@@ -201,8 +203,13 @@ def tick():
   ##line = "123.456"
   line = ser.readline()
   line = ser.readline()
-  #print("*CVU=|"+line+"|\n")
-  val=float(line)
+  print("*CVU=|"+line+"|\n")
+  print(len(line))
+  if(len(line)<7):
+    print("Warning: bad value (e.g. ACK) line="+line+"")
+    val=-99
+  else:
+    val=float(line)
   clock.config(text=curtime+"      "+str(round(val,5)))
   clock.after(1000, tick)
 
