@@ -1,1 +1,1 @@
-energy_meter.py --device COM8
+energy_meter.py --device COM3
